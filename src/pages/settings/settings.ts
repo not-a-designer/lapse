@@ -194,7 +194,7 @@ export class SettingsPage {
               igToast.present();
          
               console.log('igLink after alert is ' + this.igLink);
-              console.log('logged out');
+              console.log('logged out of instagram');
             }
           }
         ] //end buttons
@@ -263,7 +263,7 @@ export class SettingsPage {
               fbToast.present();
 
               console.log('fbLink after alert is ' + this.fbLink);
-              console.log('logged out');
+              console.log('logged out of facebook');
             }
           }
         ] //end buttons
@@ -331,7 +331,7 @@ export class SettingsPage {
               twToast.present();
 
               console.log('twLink after alert is ' + this.twLink);
-              console.log('logged out');
+              console.log('logged out of twitter');
             }
           }
         ] //end buttons
@@ -400,7 +400,7 @@ export class SettingsPage {
               emailToast.present();
 
               console.log('emailLink after alert is ' + this.emailLink);
-              console.log('logged out');
+              console.log('logged out of email');
             }
           }
         ] //end buttons
