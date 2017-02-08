@@ -1,0 +1,17 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Camera</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-padding>
+  <ion-item no-lines text-center>
+    <img [src]="cameraData">
+  </ion-item>
+  <ion-fab bottom center round>
+    <button ion-fab (click)="openCamera()"><ion-icon name="camera"></ion-icon></button>
+  </ion-fab>
+</ion-content>

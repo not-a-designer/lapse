@@ -1,0 +1,126 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Settings</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list no-padding>  
+
+    <ion-item no-lines no-padding>
+      <ion-label><ion-icon padding name="calendar"></ion-icon>Daily push</ion-label>
+      <ion-toggle #push color="secondary" [checked]="dailyPush" (ionChange)="togglePush(push.checked)"></ion-toggle>
+    </ion-item>
+
+    <ion-item no-padding>
+      
+      <ion-label><ion-icon padding [name]="toggleIcon" (click)="toggleVisible()"></ion-icon>&nbsp;Auto-generate gifs</ion-label>
+      <ion-toggle #autoGen color="secondary" [disabled]="autoGenDisabled" [checked]="autoGenChecked" (ionChange)="toggleAutoGen(push.checked)"></ion-toggle>
+    </ion-item>
+
+    <ion-item-group *ngIf="toggleOpen">
+
+      <ion-item vertical-padding no-lines>
+        <ion-label no-padding>1 month</ion-label>
+        <ion-checkbox [disabled]="!autoGenChecked"></ion-checkbox> 
+      </ion-item>
+        
+      <ion-item vertical-padding no-lines>
+        <ion-label no-padding>3 months</ion-label>
+        <ion-checkbox [disabled]="!autoGenChecked"></ion-checkbox>
+      </ion-item>
+
+      <ion-item vertical-padding no-lines>
+        <ion-label no-padding>6 months</ion-label>
+        <ion-checkbox [disabled]="!autoGenChecked"></ion-checkbox>
+      </ion-item>
+
+      <ion-item vertical-padding>
+        <ion-label>12 months</ion-label>
+        <ion-checkbox [disabled]="!autoGenChecked"></ion-checkbox>
+      </ion-item>
+
+    </ion-item-group>
+
+    <ion-item-group no-padding>
+      <ion-item no-lines no-padding>
+        
+            <ion-label><ion-icon padding name="logo-instagram"></ion-icon>&nbsp;Link Instagram</ion-label>
+            <button item-right ion-button outline small color="danger" (click)="checkLoginIg()" [hidden]="igLink">Login</button>
+            
+            <button item-right ion-button small (click)="checkLoginIg()" [hidden]="!igLink">Logout</button>
+        
+      </ion-item>
+ 
+      <ion-item no-lines no-padding>
+        
+            <ion-label><ion-icon padding name="logo-facebook"></ion-icon>&nbsp;Link Facebook</ion-label>
+            <button item-right ion-button outline small color="danger" (click)="checkLoginFb()" [hidden]="fbLink">Login</button>
+            
+            <button item-right ion-button small (click)="checkLoginFb()" [hidden]="!fbLink">Logout</button>
+        
+      </ion-item>
+
+      <ion-item no-lines no-padding>
+        
+            <ion-label><ion-icon padding name="logo-twitter"></ion-icon>&nbsp;Link Twitter</ion-label>
+            <button item-right ion-button outline small color="danger" (click)="checkLoginTw()" [hidden]="twLink">Login</button>
+            
+            <button item-right ion-button small (click)="checkLoginTw()" [hidden]="!twLink">Logout</button>
+        
+      </ion-item>
+
+      <ion-item no-lines no-padding>
+        
+            <ion-label><ion-icon padding name="mail"></ion-icon>&nbsp;Link Email</ion-label>
+            <button item-right ion-button outline small  color="danger" (click)="checkLoginEmail()" [hidden]="emailLink">Login</button>
+            
+            <button item-right ion-button small  (click)="checkLoginEmail()" [hidden]="!emailLink">Logout</button>
+        
+      </ion-item>
+
+      <!--<ion-item no-lines no-padding>
+
+        <ion-label><ion-icon padding name="logo-facebook"></ion-icon>&nbsp;Linked with Facebook</ion-label>
+        <ion-toggle color="secondary" [checked]="fbLink" (ionChange)="checkLoginFb()"></ion-toggle>
+      </ion-item>
+    
+      <ion-item no-lines no-padding>
+
+        <ion-label><ion-icon padding name="logo-twitter"></ion-icon>&nbsp;Linked Twitter</ion-label>
+        <ion-toggle color="secondary" [checked]="twLink" (ionChange)="checkLoginTw()"></ion-toggle>
+      </ion-item>
+
+      <ion-item no-padding>
+
+        <ion-label><ion-icon padding name="mail"></ion-icon>&nbsp;Linked to email</ion-label>
+        <ion-toggle color="secondary" [checked]="emailLink" (ionChange)="checkLoginEmail()"></ion-toggle>
+      </ion-item>-->
+    </ion-item-group>
+  </ion-list>
+</ion-content>
+
+<ion-footer padding>
+  <button ion-button large full (click)="showAbout()">About</button>
+</ion-footer>
+<style>
+  .facebook {
+    color: blue;
+  }
+
+  .twitter {
+    color: cyan;
+  }
+
+  .instagram {
+    color: navy;
+  }
+  .larger {
+    font-size:36px;
+  }
+  
+</style>

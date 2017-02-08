@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons left>
+    	<button ion-button icon-only left (click)="dismiss()"><ion-icon name="arrow-back"></ion-icon></button>
+    </ion-buttons>
+    <ion-title text-center>Log In via Email</ion-title>
+    <ion-buttons right>
+      <ion-icon padding-right name="mail" class="larger"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form>
+    <ion-item>
+      <ion-label floating>Username</ion-label>
+      <ion-input type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input type="password"></ion-input>
+    </ion-item>
+  </form>
+
+  <ion-footer padding>
+    <button ion-button full (click)="tryLogin()">Login</button>
+  </ion-footer>
+</ion-content>
+
+<style>
+  .facebook {
+    color: blue;
+  }
+
+  .twitter {
+    color: cyan;
+  }
+
+  .instagram {
+    color: navy;
+  }
+  .larger {
+    font-size:28px;
+  }
+  
+</style>

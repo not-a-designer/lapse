@@ -1,0 +1,13 @@
+{
+  "name": "ionic-hello-world",
+  "description": "lapse: An Ionic project",
+  "main": "",
+  "authors": [
+    "Ionic Framework"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "dependencies": {
+    "ionic-toast": "^0.4.1"
+  }
+}
