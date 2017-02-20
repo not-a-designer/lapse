@@ -438,19 +438,25 @@ export class SettingsPage {
     //CLOUD ANGULAR AUTH LOGIN
     /**************************/
     if (this.twLink === false) {
+
       this.auth.login('twitter').then((response) => {
+
         let twToast = this.toastCtrl.create({
           message: 'Lapse is now linked to your Instagram account',
           duration: 3000,
           position: 'bottom'
         });
+
         twToast.present();
 
         this.twLink = !this.twLink;
+
       }, (error) => {
         alert(JSON.stringify(error));
       });
+
     } else {
+
       let twAlert = this.alertCtrl.create({
         title: 'Log out of Twitter',
         message: 'Are you sure you want to logout?',
@@ -480,7 +486,8 @@ export class SettingsPage {
               console.log('twLink after alert is ' + this.twLink);
               console.log('logged out of twitter');
             }
-          }] //end buttons
+          }
+        ] //end buttons
       });
 
       twAlert.present();
