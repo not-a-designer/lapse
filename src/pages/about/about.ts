@@ -16,4 +16,20 @@ export class AboutPage {
   dismiss() {
     this.navCtrl.pop(AboutPage);
   }
+
+  goFacebook() {
+    this.navCtrl.pop(AboutPage);
+    window.location.href = 'https://www.facebook.com';
+  }
+
+  goTwitter() {
+    this.navCtrl.pop(AboutPage);
+    window.location.href = 'https://www.twitter.com';
+  }
+
+  goInstagram() {
+    this.navCtrl.pop(AboutPage);
+    window.location.href = 'https://www.instagram.com';
+  }
+
 }
