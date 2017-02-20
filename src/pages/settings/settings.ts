@@ -466,16 +466,15 @@ export class SettingsPage {
           }, {
             text: 'Log out',
             handler: () => {
-              TwitterConnect.logout().then((response) => {
-                this.twLink = !this.twLink;
-                let twToast = this.toastCtrl.create({
-                  message: 'Lapse is no longer linked to your Twitter account',
-                  duration: 3000,
-                  position: 'bottom'
-                });
-
-                twToast.present();
+              this.auth.logout();
+              this.twLink = !this.twLink;
+              let twToast = this.toastCtrl.create({
+                message: 'Lapse is no longer linked to your Twitter account',
+                duration: 3000,
+                position: 'bottom'
               });
+
+              twToast.present();
               
 
               console.log('twLink after alert is ' + this.twLink);
