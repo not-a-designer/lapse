@@ -172,8 +172,6 @@ export class SettingsPage {
         //alert(JSON.stringify(response));
 
         this.igLink = !this.igLink;
-      }, (error) => {
-        alert(JSON.stringify(error));
       });
     } else {
       let igAlert = this.alertCtrl.create({
@@ -289,8 +287,61 @@ export class SettingsPage {
   /****************/
 
   checkLoginFb() {
+    /**************************/
+    //CLOUD ANGULAR AUTH LOGIN
+    /**************************/
+    /*if (this.fbLink === false) {
+      this.auth.login('facebook').then((response) => {
 
-    //Facebook.getLoginStatus().then(function(response) {
+        this.fbLink = !this.fbLink;
+        let fbToast = this.toastCtrl.create({
+          message: 'Lapse is now linked to your Facebook account',
+          duration: 3000,
+          position: 'bottom'
+        });
+        fbToast.present();
+      });
+
+    } else {
+      let fbAlert = this.alertCtrl.create({
+
+        title: 'Log out of Facebook',
+        message: 'Are you sure you want to logout?',
+
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              this.fbLink = this.fbLink;
+              console.log('fbLink after alert is ' + this.fbLink)
+              console.log('cancel');
+            }
+          }, {
+            text: 'Log out',
+            handler: () => {
+              this.auth.logout();
+              this.fbLink = !this.fbLink;
+              let fbToast = this.toastCtrl.create({
+                message: 'Lapse is no longer linked to your Facebook account',
+                duration: 3000,
+                position: 'bottom'
+              });
+
+              fbToast.present();
+
+              console.log('fbLink after alert is ' + this.fbLink);
+              console.log('logged out of facebook');
+            }
+          }
+        ] //end buttons
+      });
+
+      fbAlert.present();
+    }*/
+    /**************************/
+
+
 
     /***********************/
     //FACEBOOK NATIVE LOGIN
@@ -354,7 +405,7 @@ export class SettingsPage {
 
       fbAlert.present();
     }//end else
-
+    /******************
     
 
     /***************/
@@ -451,8 +502,6 @@ export class SettingsPage {
 
         this.twLink = !this.twLink;
 
-      }, (error) => {
-        alert(JSON.stringify(error));
       });
 
     } else {
