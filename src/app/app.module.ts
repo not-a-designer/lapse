@@ -12,7 +12,6 @@ import { EditPage } from '../pages/edit/edit';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ModalPage } from '../pages/modal/modal';
 import { AboutPage } from '../pages/about/about';
-//import { IgLoginPage } from '../pages/iglogin/iglogin';
 import { EmailLoginPage } from '../pages/emaillogin/emaillogin';
 
 
@@ -31,9 +30,6 @@ const cloudSettings: CloudSettings = {
     TabsPage,
     ModalPage,
     AboutPage,
-    //IgLoginPage,
-    //FbLoginPage,
-    //TwLoginPage,
     EmailLoginPage
   ],
   imports: [
@@ -51,9 +47,6 @@ const cloudSettings: CloudSettings = {
     TabsPage,
     ModalPage,
     AboutPage,
-    //IgLoginPage,
-    //FbLoginPage,
-    //TwLoginPage,
     EmailLoginPage
   ],
   providers: [Facebook, TwitterConnect, Camera, {provide: ErrorHandler, 

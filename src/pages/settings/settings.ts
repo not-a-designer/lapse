@@ -173,7 +173,8 @@ export class SettingsPage {
 
         this.igLink = !this.igLink;
       });
-    } else {
+    } else { //if user is logged in
+
       let igAlert = this.alertCtrl.create({
 
         title: 'Log out of Instagram',
@@ -213,8 +214,6 @@ export class SettingsPage {
     /***************/
     /*if(this.igLink === false) { //if user is not logged into instagram
 
-      console.log('igLink is ' + this.igLink);
-
       let igModal = this.ModalCtrl.create(IgLoginPage);
 
       igModal.enableBack();
@@ -243,19 +242,19 @@ export class SettingsPage {
 
         title: 'Log out of Instagram',
         message: 'Are you sure you want to logout?',
-
         buttons: [
           {
             text: 'Cancel',
             role: 'cancel',
             handler: () => {
+
               this.igLink = this.igLink;
-              console.log('igLink after alert is ' + this.igLink);
-              console.log('cancel');
+
             }
           }, {
             text: 'Log out',
             handler: () => {
+
               this.igLink = !this.igLink;
     
               let igToast = this.toastCtrl.create({
@@ -265,9 +264,6 @@ export class SettingsPage {
               });
 
               igToast.present();
-         
-              console.log('igLink after alert is ' + this.igLink);
-              console.log('logged out of instagram');
             }
           }
         ] //end buttons
@@ -346,7 +342,7 @@ export class SettingsPage {
 
       fbAlert.present();
     }*/
-    /**************************/
+    /****END CLOUD AUTH FACEBOOK LOGIN****/
 
 
 
@@ -412,7 +408,7 @@ export class SettingsPage {
 
       fbAlert.present();
     }
-    /******************/
+    /********END NATIVE FACEBOOK LOGIN**********/
     
 
     /***************/
@@ -480,7 +476,7 @@ export class SettingsPage {
 
       fbAlert.present();
     }*/
-    /**************/
+    /*******END ORIGINAL MODAL*******/
 
   }
 
