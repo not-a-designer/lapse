@@ -36,7 +36,7 @@ export class SettingsPage {
   public twLink: boolean;
   public emailLink: boolean;
 
-  public FB_APP_ID: number = 245807185860323;
+  public FB_APP_ID: number = 1355955421093900;
   
 
   constructor(public navCtrl: NavController,
@@ -290,6 +290,13 @@ export class SettingsPage {
     /**************************/
     //CLOUD ANGULAR AUTH LOGIN
     /**************************/
+    /***
+     *Throws InternalServiceError
+     *'The Facebook access_token endpoint
+     *had an error: This IP can't make
+     *requests from that application' status 500
+     ***/
+
     /*if (this.fbLink === false) {
       this.auth.login('facebook').then((response) => {
 
@@ -348,7 +355,7 @@ export class SettingsPage {
     /***********************/
     if(this.fbLink === false) {
 
-      Facebook.login(['email', 'public_profile']).then((response) => {
+      Facebook.login(['email']).then((response) => {
         if(response.authResponse) {
           this.fbLink = true;
           let fbToast = this.toastCtrl.create({
@@ -404,8 +411,8 @@ export class SettingsPage {
       });
 
       fbAlert.present();
-    }//end else
-    /******************
+    }
+    /******************/
     
 
     /***************/

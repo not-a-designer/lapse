@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.ionicframework.lapse138649" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>lapse</name>
+    <name>LapseApp</name>
     <description>An awesome Ionic/Cordova app.</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+    <author email="joel.johnson.design@gmail.com" href="http://ionicframework.com/">Ionic Framework Team</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
@@ -39,7 +39,6 @@
     <plugin name="cordova-plugin-camera" spec="~2.3.1" />
     <plugin name="cordova-plugin-x-toast" spec="~2.5.2" />
     <plugin name="cordova-instagram-plugin" spec="~0.5.4" />
-    <plugin name="cordova-plugin-facebook4" spec="1.7.4" />
     <plugin name="cordova-plugin-nativestorage" spec="~2.2.1" />
     <plugin name="twitter-connect-plugin" spec="~0.6.0">
         <variable name="FABRIC_KEY" value="2ffe1bb19ee3c3395df3990a1332ffd47c1669bc" />
@@ -48,4 +47,8 @@
     <preference name="TwitterConsumerSecret" value="DGLDjR51Cf8hjo7T9hXeFip71Yp6u6BO35ureiu3i3AAZH1dai" />
     <preference name="deployment-target" value="7.0" />
     <plugin name="cordova-plugin-inappbrowser" spec="~1.6.1" />
+    <plugin name="cordova-plugin-facebook4" spec="~1.7.4">
+        <variable name="APP_ID" value="1355955421093900" />
+        <variable name="APP_NAME" value="LapseApp" />
+    </plugin>
 </widget>
