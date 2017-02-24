@@ -4,7 +4,9 @@ import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { MyApp } from './app.component';
 
 import { Camera } from 'ionic-native';
-import { Facebook, TwitterConnect } from 'ionic-native';
+import { Facebook } from 'ionic-native';
+import { TwitterConnect } from 'ionic-native';
+import { CameraPreview } from 'ionic-native';
 
 import { CameraPage } from '../pages/camera/camera';
 import { SettingsPage } from '../pages/settings/settings';
@@ -32,6 +34,7 @@ const cloudSettings: CloudSettings = {
     AboutPage,
     EmailLoginPage
   ],
+
   imports: [
     IonicModule.forRoot(MyApp),
     CloudModule.forRoot(cloudSettings)
@@ -49,7 +52,13 @@ const cloudSettings: CloudSettings = {
     AboutPage,
     EmailLoginPage
   ],
-  providers: [Facebook, TwitterConnect, Camera, {provide: ErrorHandler, 
-               useClass: IonicErrorHandler}]
+
+  providers: [Facebook, 
+              TwitterConnect, 
+              Camera, 
+              CameraPreview, {
+                provide: ErrorHandler, 
+                useClass: IonicErrorHandler
+              }]
 })
 export class AppModule {}

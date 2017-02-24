@@ -1,17 +1,12 @@
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>Camera</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
 <ion-content no-padding>
-  <ion-item no-lines text-center>
-    <img [src]="cameraData">
-  </ion-item>
-  <ion-fab bottom center round>
-    <button ion-fab (click)="openCamera()"><ion-icon name="camera"></ion-icon></button>
+  <img [src]="cameraData">
+  <ion-fab bottom center round *ngIf="!pictureTaken">
+    <button ion-fab (click)="takePicture()"><ion-icon name="camera"></ion-icon></button>
+  </ion-fab>
+  <ion-fab bottom left round *ngIf="pictureTaken">
+    <button ion-fab color="danger" (click)="deletePicture()"><ion-icon name="trash"></ion-icon></button>
+  </ion-fab>
+  <ion-fab bottom right round *ngIf="pictureTaken">
+    <button ion-fab color="secondary" (click)="savePicture()"><ion-icon name="photos"></ion-icon></button>
   </ion-fab>
 </ion-content>

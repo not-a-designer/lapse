@@ -1,5 +1,9 @@
 // http://ionicframework.com/docs/v2/theming/
 
+html, body, ion-app, ion-view {
+  background-color: transparent !important;
+}
+
 
 // App Global Sass
 // --------------------------------------------------

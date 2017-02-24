@@ -51,4 +51,10 @@
         <variable name="APP_ID" value="1355955421093900" />
         <variable name="APP_NAME" value="LapseApp" />
     </plugin>
+    <plugin name="cordova-plugin-file" spec="~4.3.1" />
+    <plugin name="cordova.plugins.diagnostic" spec="~3.4.1" />
+    <plugin name="com.mbppower.camerapreview" spec="~0.0.8" />
+    <plugin name="phonegap-plugin-push" spec="~1.9.4">
+        <variable name="SENDER_ID" value="841749675635" />
+    </plugin>
 </widget>

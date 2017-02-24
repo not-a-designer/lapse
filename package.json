@@ -1,6 +1,6 @@
 {
   "name": "ionic-hello-world",
-  "author": "Ionic Framework",
+  "author": "Joel Johnson",
   "homepage": "http://ionicframework.com/",
   "private": true,
   "scripts": {
@@ -44,7 +44,8 @@
     "ionic-plugin-keyboard",
     "cordova-plugin-camera",
     "cordova-plugin-facebook4",
-    "cordova-plugin-inappbrowser"
+    "cordova-plugin-inappbrowser",
+    "cordova-plugin-camera-preview"
   ],
   "cordovaPlatforms": [],
   "description": "lapse: An Ionic project"
