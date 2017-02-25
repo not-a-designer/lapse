@@ -97,7 +97,7 @@ export class CameraPage {
     CameraPreview.startCamera(   //start CameraPreview
 
       previewRect,  //dimensions
-      'rear',      //camera direction
+      'front',      //camera direction
       false,        //dragEnabled
       false,        //tapEnabled
       true,         //toBack
@@ -106,7 +106,7 @@ export class CameraPage {
 
     CameraPreview.show();         //show CameraPreview 
 
-    CameraPreview.switchCamera()  //switch to front camera, fixes a resolution bug
+    //CameraPreview.switchCamera()  //switch to front camera, fixes a resolution bug
 
     CameraPreview.setOnPictureTakenHandler().subscribe((result) => {
 
