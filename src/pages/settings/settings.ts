@@ -23,36 +23,46 @@ import { EmailLoginPage } from '../emaillogin/emaillogin';
 })
 export class SettingsPage {
 
+  //default toggle value
   public dailyPush: boolean;
 
+  //default toggle values
   public autoGenChecked: boolean;
   public autoGenDisabled: boolean;
 
+  //default extra options toggle values
   public toggleIcon: string;
   public toggleOpen: boolean;
 
+  //default login status
   public fbLink: boolean;
   public igLink: boolean;
   public twLink: boolean;
   public emailLink: boolean;
 
+  //facebook app id number
   public FB_APP_ID: number = 1355955421093900;
+  
   
   public igAuthIcon: string;
   public igAuthText: string;
   public igLoginColor: string;
+  public iOutline: boolean;
 
   public fbAuthIcon: string;
   public fbAuthText: string;
   public fbLoginColor: string;
+  public fOutline: boolean;
 
   public twAuthIcon: string;
   public twAuthText: string;
   public twLoginColor: string;
+  public tOutline: boolean;
 
   public emailAuthIcon: string;
   public emailAuthText: string;
   public emailLoginColor: string;
+  public eOutline: boolean;
   
 
   constructor(public navCtrl: NavController,
@@ -180,6 +190,11 @@ export class SettingsPage {
     this.fbLoginColor= this.fbLink ? 'secondary' : 'danger';
     this.twLoginColor= this.twLink ? 'secondary' : 'danger';
     this.emailLoginColor= this.emailLink ? 'secondary' : 'danger';
+
+    this.iOutline = this.igLink ? false : true;
+    this.fOutline = this.fbLink ? false : true;
+    this.tOutline = this.twLink ? false : true;
+    this.eOutline = this.emailLink ? false : true;
   }
 
 

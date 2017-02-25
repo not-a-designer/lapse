@@ -24,6 +24,7 @@ const cloudSettings: CloudSettings = {
 };
 
 @NgModule({
+
   declarations: [
     MyApp,
     CameraPage,
@@ -56,7 +57,8 @@ const cloudSettings: CloudSettings = {
   providers: [Facebook, 
               TwitterConnect, 
               Camera, 
-              CameraPreview, {
+              CameraPreview, 
+              {
                 provide: ErrorHandler, 
                 useClass: IonicErrorHandler
               }]

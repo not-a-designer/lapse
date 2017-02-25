@@ -50,7 +50,7 @@
       <ion-item no-lines no-padding>
         
             <ion-label><ion-icon padding name="logo-instagram"></ion-icon>&nbsp;Link Instagram</ion-label>
-            <button item-right ion-button outline small [color]="igLoginColor" (click)="checkLoginIg()"><ion-icon [name]="igAuthIcon"></ion-icon>&nbsp;{{ igAuthText }}</button>
+            <button item-right ion-button [outline]="iOutline" small [color]="igLoginColor" (click)="checkLoginIg()"><ion-icon [name]="igAuthIcon"></ion-icon>&nbsp;{{ igAuthText }}</button>
             
             <!--<button item-right ion-button small color="secondary" (click)="checkLoginIg()" [hidden]="!igLink"><ion-icon [name]="fbAuthIcon"></ion-icon> Logout</button>-->
         
@@ -59,7 +59,7 @@
       <ion-item no-lines no-padding>
         
             <ion-label><ion-icon padding name="logo-facebook"></ion-icon>&nbsp;Link Facebook</ion-label>
-            <button item-right ion-button outline small [color]="fbLoginColor" (click)="checkLoginFb()"><ion-icon [name]="fbAuthIcon"></ion-icon>&nbsp;{{ fbAuthText }}</button>
+            <button item-right ion-button [outline]="fOutline" small [color]="fbLoginColor" (click)="checkLoginFb()"><ion-icon [name]="fbAuthIcon"></ion-icon>&nbsp;{{ fbAuthText }}</button>
             
             <!--<button item-right ion-button small color="secondary" (click)="checkLoginFb()" [hidden]="!fbLink"><ion-icon [name]="fbAuthIcon"></ion-icon> Logout</button>-->
         
@@ -68,7 +68,7 @@
       <ion-item no-lines no-padding>
         
             <ion-label><ion-icon padding name="logo-twitter"></ion-icon>&nbsp;Link Twitter</ion-label>
-            <button item-right ion-button outline small [color]="twLoginColor" (click)="checkLoginTw()"><ion-icon [name]="twAuthIcon"></ion-icon>&nbsp;{{ twAuthText }}</button>
+            <button item-right ion-button [outline]="tOutline" small [color]="twLoginColor" (click)="checkLoginTw()"><ion-icon [name]="twAuthIcon"></ion-icon>&nbsp;{{ twAuthText }}</button>
             
             <!--<button item-right ion-button small color="secondary" (click)="checkLoginTw()" [hidden]="!twLink"><ion-icon [name]="twAuthIcon"></ion-icon> Logout</button>-->
         
@@ -77,7 +77,7 @@
       <ion-item no-lines no-padding>
         
             <ion-label><ion-icon padding name="mail"></ion-icon>&nbsp;Link Email</ion-label>
-            <button item-right ion-button outline small  [color]="emailLoginColor" (click)="checkLoginEmail()"><ion-icon [name]="emailAuthIcon"></ion-icon>&nbsp;{{ emailAuthText }}</button>
+            <button item-right ion-button [outline]="eOutline" small  [color]="emailLoginColor" (click)="checkLoginEmail()"><ion-icon [name]="emailAuthIcon"></ion-icon>&nbsp;{{ emailAuthText }}</button>
             
             <!--<button item-right ion-button small color="secondary" (click)="checkLoginEmail()" [hidden]="!emailLink"><ion-icon [name]="emailAuthIcon"></ion-icon> Logout</button>-->
         
