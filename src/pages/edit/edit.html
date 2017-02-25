@@ -9,10 +9,6 @@
 
 <ion-content vertical-padding>
 
-  <!--<ion-item text-center>
-        <ion-label>Total Frames: <strong>{{ totalFrames.value || 7}}</strong></ion-label>
-        <ion-label>Frames/Sec: <strong>{{ fps.value || 1}}</strong></ion-label>
-  </ion-item>-->
   <ion-item no-lines vertical-padding text-center>
     <ion-label padding-bottom floating>{{ totalFrames.value || 7}} frames</ion-label>
     <ion-range #totalFrames min="7" max="1825" step="7" snaps="7" pin="true" value="7">
@@ -28,34 +24,19 @@
       <ion-label range-right>10</ion-label>
     </ion-range>
   </ion-item>
-  <!--<ion-item padding-vertical>
-    <ion-range #fps min="1" max="10" step="1" snaps="1" pin="true" value="1">
-      <ion-label range-left>1</ion-label>
-      <ion-label range-right>10</ion-label>
-    </ion-range>
-  </ion-item>-->
-
-
-  
-  <ion-list no-padding>
-    <!--<ion-item no-lines padding-vertical>
-      
-    </ion-item>-->
-
-    <ion-item padding-vertical no-lines>
-      <ion-row>
-        <button large ion-button full block (click)="showPreviewModal()">Preview</button>
-      </ion-row>
-      <ion-row no-padding>
-
-        <ion-col width-50 padding-vertical>
-          <button color="secondary" ion-button full (click)="saveGif(totalFrames.value, fps.value)">Save</button>
-        </ion-col>
-
-        <ion-col width-50 padding-vertical>
-          <button color="danger" ion-button full (click)="presentActionSheet()">Share</button>
-        </ion-col>
-      </ion-row>
-    </ion-item>
-  </ion-list>
 </ion-content>
+
+
+<ion-footer>
+  <ion-row no-padding>
+    <button large ion-button full block (click)="showPreviewModal()">Preview</button>
+  </ion-row>
+  <ion-row no-padding>
+    <ion-col width-50 no-padding>
+      <button color="secondary" ion-button full large (click)="saveGif(totalFrames.value, fps.value)">Save</button>
+    </ion-col>
+    <ion-col width-50 no-padding>
+      <button color="danger" ion-button full large (click)="presentShareActionSheet()">Share</button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

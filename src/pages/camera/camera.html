@@ -1,5 +1,5 @@
 <ion-content no-padding>
-  <img [src]="cameraData">
+  <img [src]="cameraData" *ngIf="pictureTaken">
   <ion-fab bottom center round *ngIf="!pictureTaken">
     <button ion-fab (click)="takePicture()"><ion-icon name="camera"></ion-icon></button>
   </ion-fab>

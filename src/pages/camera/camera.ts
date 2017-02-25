@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform, ToastController } from 'ionic-angular';
+import { NavController, NavParams, Platform, AlertController, ToastController } from 'ionic-angular';
 
 import { Diagnostic, CameraPreview, CameraPreviewRect } from 'ionic-native';
 
@@ -19,6 +19,7 @@ export class CameraPage {
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
+              public alertCtrl: AlertController,
               public toastCtrl: ToastController,
               public platform: Platform
   ) {
@@ -26,7 +27,7 @@ export class CameraPage {
     this.checkPermissions();
 
     this.pictureTaken = false;
-    this.cameraData = '';
+    this.cameraData = 'http://placehold.it/' + window.innerWidth + 'x' + window.innerHeight;
 
   }
   /***END CONSTRUCTOR****/
@@ -71,17 +72,21 @@ export class CameraPage {
   /**** END CHECKPERMISSIONS() ****/
 
 
+
+  /******************START CAMERAPREVIEW FUNCTIONS*******************/
+
+
   /***
    *
-   * * * startPreview()
+   * * * startPreview()* * *
    *SET PREVIEWRECT DIMENSIONS
    *CALL STARTCAMERA() WITH RECT AND PARAMETERS
-   *CALL SHOW() 
+   *SWITCH TO FRONT CAMERA, SHOW PREVIEW 
    *SET ONPICTURETAKENHANDLER() WITH OBSERVABLE PHOTO STRINGS
    *
    ***/
   startPreview() {
-
+    
     let previewRect: CameraPreviewRect = {  //set preview dimensions to the device inner dimensions
       x: 0,
       y: 0,
@@ -90,51 +95,58 @@ export class CameraPage {
     };
 
     CameraPreview.startCamera(   //start CameraPreview
+
       previewRect,  //dimensions
-      'front',      //camera direction
+      'rear',      //camera direction
       false,        //dragEnabled
       false,        //tapEnabled
       true,         //toBack
       1             //alpha
     );
 
-    CameraPreview.show();  //show CameraPreview 
+    CameraPreview.show();         //show CameraPreview 
+
+    CameraPreview.switchCamera()  //switch to front camera, fixes a resolution bug
 
     CameraPreview.setOnPictureTakenHandler().subscribe((result) => {
 
-      CameraPreview.stopCamera();    //hides camera preview
-      this.cameraData = result[0];   //sets source url to newly captured image
-      this.pictureTaken = !this.pictureTaken;
+      alert(JSON.stringify('result[0] = ' + result[0]));
+      alert(JSON.stringify('result[1] = ' + result[1]));
+      //this.cameraData = result[0];  //sets source url to previous image, first picture will be black
+      this.cameraData = result[1];    //sets source url to newly captured image 
+      CameraPreview.stopCamera();     //hides camera preview
+      CameraPreview.hide();
       
-
     });
   }
-  /*** END INITIALIZEPREVIEW() ***/
+  /***             END INITIALIZEPREVIEW()         ***/
 
-
+ 
+  
 
 
   /***
    *
-   *START CAMERAPREVIEW FUNCTIONS
+   * * * takePicture() * * *
+   *CAPTURE CAMERAPREVIEW IMAGE AT SPECIFIED DIMENSIONS
    *
-   ***/
-    
-  stopCamera(){
-    CameraPreview.stopCamera();
-  }
-    
+   ***/  
   takePicture(){
+
     let size = {
       maxWidth: window.innerWidth, 
       maxHeight: window.innerHeight
     };
 
     CameraPreview.takePicture(size);
-    this.pictureTaken = !this.pictureTaken;  //toggles camera button with save+delete
+    this.pictureTaken = true;  //toggles camera button with save+delete
   }
-    
-  SwitchCamera(){
+  /***            END TAKEPICTURE()          ***/
+  
+
+
+
+  switchCamera(){
     CameraPreview.switchCamera();
   }
 
@@ -145,27 +157,92 @@ export class CameraPage {
   hideCamera(){
     CameraPreview.hide();
   }
-  /***END CAMERAPREVIEW FUNCTIONS***/
+
+  stopCamera(){
+    CameraPreview.stopCamera();
+  }
+  /*****************END CAMERAPREVIEW FUNCTIONS**********************/
 
 
 
 
   /***
    *
-   *DELETE CAMERAPREVEIW CAPTURE
+   * * * deletePicture() * * *
+   *VERIFY DELETION
    *RESTART CAMERAPREVIEW
    *TOGGLE CAMERA BUTTONS
    *
    ***/
   deletePicture() {
-    this.cameraData = '';
-    this.startPreview();
-    
-  }
 
-  savePicture() {
+    this.alertCtrl.create({
+
+      title: 'Delete Picture',
+      message: 'Are you sure you want to delete this picture?',
+
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        handler: () => {
+          console.log('cancel clicked');
+        }
+      }, {
+        text: 'Delete',
+        handler: () => {
+          this.cameraData = '';
+          this.startPreview();
+          this.pictureTaken = false;  //toggle camera buttons
+        }
+      }]
+
+    }).present();
+    
     
   }
+  /*** END DELETEPICTURE() ***/
+
+
+
+
+  /***
+   *
+   * * * savePicture() * * *
+   *SAVE PICTURE TO GALLERY
+   *
+   ***/
+  savePicture() {
+
+    this.alertCtrl.create({
+
+      title: 'Save Picture',
+      message: 'Are you sure you want to save this picture?',
+
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        handler: () => {
+          console.log('cancel clicked');
+        }
+      }, {
+        text: 'Save',
+        handler: () => {
+          this.cameraData = '';
+          this.pictureTaken = false;
+          this.toastCtrl.create({
+
+            message: 'image saved',
+            position: 'bottom',
+            duration: 3000
+
+          }).present();
+        }
+      }]  //end buttons array
+
+    }).present();
+  }
+  /*** END SAVEPICTURE FUNCTION ***/
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CameraPage');

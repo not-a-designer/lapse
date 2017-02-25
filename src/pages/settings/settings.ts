@@ -38,6 +38,22 @@ export class SettingsPage {
 
   public FB_APP_ID: number = 1355955421093900;
   
+  public igAuthIcon: string;
+  public igAuthText: string;
+  public igLoginColor: string;
+
+  public fbAuthIcon: string;
+  public fbAuthText: string;
+  public fbLoginColor: string;
+
+  public twAuthIcon: string;
+  public twAuthText: string;
+  public twLoginColor: string;
+
+  public emailAuthIcon: string;
+  public emailAuthText: string;
+  public emailLoginColor: string;
+  
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -63,6 +79,7 @@ export class SettingsPage {
     this.twLink = false;
     this.emailLink = false;
   
+    this.updateButtons();
 
     //initialize Facebook SDK
     Facebook.browserInit(this.FB_APP_ID, 'v2.8');
@@ -148,6 +165,23 @@ export class SettingsPage {
   }
 
 
+  updateButtons() {
+    this.igAuthIcon = this.igLink ? 'checkbox' : 'alert';
+    this.fbAuthIcon = this.fbLink ? 'checkbox' : 'alert';
+    this.twAuthIcon = this.twLink ? 'checkbox' : 'alert';
+    this.emailAuthIcon = this.emailLink ? 'checkbox' : 'alert';
+    
+    this.igAuthText = this.igLink ? 'Logout' : 'Login';
+    this.fbAuthText = this.fbLink ? 'Logout' : 'Login';
+    this.twAuthText = this.twLink ? 'Logout' : 'Login';
+    this.emailAuthText = this.emailLink ? 'Logout' : 'Login';
+
+    this.igLoginColor= this.igLink ? 'secondary' : 'danger';
+    this.fbLoginColor= this.fbLink ? 'secondary' : 'danger';
+    this.twLoginColor= this.twLink ? 'secondary' : 'danger';
+    this.emailLoginColor= this.emailLink ? 'secondary' : 'danger';
+  }
+
 
   /****************/
   //INSTAGRAM LOGIN
@@ -172,6 +206,7 @@ export class SettingsPage {
         //alert(JSON.stringify(response));
 
         this.igLink = !this.igLink;
+        this.updateButtons();
       });
     } else { //if user is logged in
 
@@ -192,6 +227,7 @@ export class SettingsPage {
             handler: () => {
               this.auth.logout();
               this.igLink = !this.igLink;
+              this.updateButtons();
     
               let igToast = this.toastCtrl.create({
                 message: 'Lapse is no longer linked to your Instagram account',
@@ -224,6 +260,7 @@ export class SettingsPage {
         } else { //login success
 
           this.igLink = !this.igLink; 
+          this.updateButtons();
    
           let igToast = this.toastCtrl.create({
             message: 'Lapse is now linked to your Instagram account',
@@ -256,7 +293,7 @@ export class SettingsPage {
             handler: () => {
 
               this.igLink = !this.igLink;
-    
+              this.updateButtons();
               let igToast = this.toastCtrl.create({
                 message: 'Lapse is no longer linked to your Instagram account',
                 duration: 3000,
@@ -297,6 +334,7 @@ export class SettingsPage {
       this.auth.login('facebook').then((response) => {
 
         this.fbLink = !this.fbLink;
+        this.updateButtons();
         let fbToast = this.toastCtrl.create({
           message: 'Lapse is now linked to your Facebook account',
           duration: 3000,
@@ -325,6 +363,7 @@ export class SettingsPage {
             handler: () => {
               this.auth.logout();
               this.fbLink = !this.fbLink;
+              this.updateButtons();
               let fbToast = this.toastCtrl.create({
                 message: 'Lapse is no longer linked to your Facebook account',
                 duration: 3000,
@@ -353,7 +392,8 @@ export class SettingsPage {
 
       Facebook.login(['email']).then((response) => {
         if(response.authResponse) {
-          this.fbLink = true;
+          this.fbLink = !this.fbLink;
+          this.updateButtons();
           let fbToast = this.toastCtrl.create({
             message: 'Lapse is now linked to your Facebook account',
             duration: 3000,
@@ -390,6 +430,7 @@ export class SettingsPage {
             handler: () => {
               Facebook.logout().then((response) => {
                 this.fbLink = !this.fbLink;
+                this.updateButtons();
                 let fbToast = this.toastCtrl.create({
                   message: 'Lapse is no longer linked to your Facebook account',
                   duration: 3000,
@@ -428,6 +469,7 @@ export class SettingsPage {
         } else {
 
           this.fbLink = !this.fbLink;
+          this.updateButtons();
           let fbToast = this.toastCtrl.create({
             message: 'Lapse is now linked to your Facebook account',
             duration: 3000,
@@ -459,6 +501,7 @@ export class SettingsPage {
             text: 'Log out',
             handler: () => {
               this.fbLink = !this.fbLink;
+              this.updateButtons();
               let fbToast = this.toastCtrl.create({
                 message: 'Lapse is no longer linked to your Facebook account',
                 duration: 3000,
@@ -504,6 +547,7 @@ export class SettingsPage {
         twToast.present();
 
         this.twLink = !this.twLink;
+        this.updateButtons();
 
       });
 
@@ -526,6 +570,7 @@ export class SettingsPage {
             handler: () => {
               this.auth.logout();
               this.twLink = !this.twLink;
+              this.updateButtons();
               let twToast = this.toastCtrl.create({
                 message: 'Lapse is no longer linked to your Twitter account',
                 duration: 3000,
@@ -554,6 +599,7 @@ export class SettingsPage {
       TwitterConnect.login().then((response) => {
         if (response.token) {
           this.twLink = !this.twLink;
+          this.updateButtons();
           let twToast = this.toastCtrl.create({
             message: 'Lapse is now linked to your Twitter account',
             duration: 3000,
@@ -589,6 +635,7 @@ export class SettingsPage {
             handler: () => {
               TwitterConnect.logout().then((response) => {
                 this.twLink = !this.twLink;
+                this.updateButtons();
                 let twToast = this.toastCtrl.create({
                   message: 'Lapse is no longer linked to your Twitter account',
                   duration: 3000,
@@ -629,6 +676,7 @@ export class SettingsPage {
         } else {
 
           this.twLink = !this.twLink;
+          this.updateButtons();
           let twToast = this.toastCtrl.create({
             message: 'Lapse is now linked to your Twitter account',
             duration: 3000,
@@ -660,6 +708,7 @@ export class SettingsPage {
             text: 'Log out',
             handler: () => {
               this.twLink = !this.twLink;
+              this.updateButtons();
 
               let twToast = this.toastCtrl.create({
                 message: 'Lapse is no longer linked to your Twitter account',
@@ -703,6 +752,7 @@ export class SettingsPage {
         } else {
 
           this.emailLink = !this.emailLink;
+          this.updateButtons();
           let emailToast = this.toastCtrl.create({
             message: 'Lapse is now linked to your email account',
             duration: 3000,
@@ -734,6 +784,7 @@ export class SettingsPage {
             text: 'Log out',
             handler: () => {
               this.emailLink = !this.emailLink;
+              this.updateButtons();
 
               let emailToast = this.toastCtrl.create({
                 message: 'Lapse is no longer linked to your email account',

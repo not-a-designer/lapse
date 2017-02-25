@@ -103,7 +103,7 @@ export class EditPage {
 
 
   //Shows action menu
-  presentActionSheet() {
+  presentShareActionSheet() {
 
     let actionSheet = this.actionSheetCtrl.create({
 
