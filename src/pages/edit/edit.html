@@ -7,36 +7,34 @@
 </ion-header>
 
 
-<ion-content vertical-padding>
+<ion-content>
 
-  <ion-item no-lines vertical-padding text-center>
-    <ion-label padding-bottom floating>{{ totalFrames.value || 7}} frames</ion-label>
-    <ion-range #totalFrames min="7" max="1825" step="7" snaps="7" pin="true" value="7">
+  <ion-item horizontal-padding text-center no-lines>
+    <ion-label stacked>{{ totalFrames.value || 7 }} frames</ion-label>
+    <ion-range #totalFrames color="dark" min="7" max="1825" step="7" snaps="7" value="7">
       <ion-label range-left>7</ion-label>
       <ion-label range-right>1825</ion-label>
     </ion-range>
   </ion-item>
 
-  <ion-item vertical-padding text-center>
-    <ion-label padding-bottom floating>{{ fps.value || 1}} fps</ion-label>
-    <ion-range #fps min="1" max="10" step="1" snaps="1" pin="true" value="1">
+  <ion-item horizontal-padding text-center>
+    <ion-label stacked>{{ fps.value || 1 }} fps</ion-label>
+    <ion-range #fps color="dark" min="1" max="10" step="1" snaps="1" value="1">
       <ion-label range-left>1</ion-label>
       <ion-label range-right>10</ion-label>
     </ion-range>
   </ion-item>
+
+  <ion-fab bottom left round padding>
+    <button ion-fab color="light" (click)="saveGif(totalFrames.value, fps.value)"><ion-icon name="download"></ion-icon></button>
+  </ion-fab>
+
+  <ion-fab bottom center round padding-bottom>
+    <button ion-fab large color="dark" (click)="showPreviewModal()"><ion-icon name="eye"></ion-icon></button>
+  </ion-fab>
+
+  <ion-fab bottom right round padding>
+    <button ion-fab color="light" (click)="presentShareActionSheet()"><ion-icon name="share"></ion-icon></button>
+  </ion-fab>
+
 </ion-content>
-
-
-<ion-footer>
-  <!--<ion-row no-padding>-->
-    <button large ion-button full block (click)="showPreviewModal()">Preview</button>
-  <!--</ion-row>-->
-  <ion-row no-padding>
-    <ion-col width-50 no-padding>
-      <button color="secondary" ion-button full large (click)="saveGif(totalFrames.value, fps.value)">Save</button>
-    </ion-col>
-    <ion-col width-50 no-padding>
-      <button color="danger" ion-button full large (click)="presentShareActionSheet()">Share</button>
-    </ion-col>
-  </ion-row>
-</ion-footer>

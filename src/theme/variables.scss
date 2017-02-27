@@ -36,22 +36,29 @@ $colors: (
 // --------------------------------------------------
 // iOS only Sass variables can go here
 
+  $tabs-ios-tab-icon-color-active: #222 !important;
+  $tabs-ios-tab-text-color-active: #222 !important;
 
+  $checkbox-ios-item-left-margin: 6px 2px 8px 2px !important;
 
 
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
+  $tabs-md-tab-icon-color-active: #222 !important;
+  $tabs-md-tab-text-color-active: #222 !important;
 
-
+  $checkbox-md-item-left-margin: 6px 2px 8px 2px !important;
 
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
 
+  $tabs-wp-tab-icon-color-active: #222 !important;
+  $tabs-wp-tab-color-active: #222 !important;
 
-
+  $checkbox-wp-item-left-margin: 6px 2px 8px 2px !important;
 
 // App Theme
 // --------------------------------------------------

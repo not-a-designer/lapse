@@ -34,7 +34,7 @@ export class SettingsPage {
   public toggleIcon: string;
   public toggleOpen: boolean;
 
-  //default login status
+  //default login statuses
   public fbLink: boolean;
   public igLink: boolean;
   public twLink: boolean;
@@ -42,27 +42,40 @@ export class SettingsPage {
 
   //facebook app id number
   public FB_APP_ID: number = 1355955421093900;
-  
-  
+ 
+  //instagram login button attributes
   public igAuthIcon: string;
   public igAuthText: string;
   public igLoginColor: string;
   public iOutline: boolean;
 
+  //facebook login button attributes
   public fbAuthIcon: string;
   public fbAuthText: string;
   public fbLoginColor: string;
   public fOutline: boolean;
 
+  //twitter login button attributes
   public twAuthIcon: string;
   public twAuthText: string;
   public twLoginColor: string;
   public tOutline: boolean;
 
+  //email login button attributes
   public emailAuthIcon: string;
   public emailAuthText: string;
   public emailLoginColor: string;
   public eOutline: boolean;
+
+  //checkbox values
+  public oneWeek: boolean;
+  public twoWeek: boolean;
+  public threeWeek: boolean;
+  public fourWeek: boolean;
+  public twoMonth: boolean;
+  public threeMonth: boolean;
+  public fourMonth: boolean;
+  public sixMonth: boolean;
   
 
   constructor(public navCtrl: NavController,
@@ -81,15 +94,27 @@ export class SettingsPage {
     this.autoGenChecked = false;
     this.autoGenDisabled = false;
 
-    this.toggleIcon = 'arrow-dropright';
     this.toggleOpen = false;
 
+    this.updateToggleIcon();
     this.igLink = false;
     this.fbLink = false;
     this.twLink = false;
     this.emailLink = false;
+
+    this.oneWeek = false;
+    this.twoWeek = false;
+    this.threeWeek = false;
+    this.fourWeek = false;
+    this.twoMonth = false;
+    this.threeMonth = false;
+    this.fourMonth = false;
+    this.sixMonth = false;
   
-    this.updateButtons();
+    this.updateButtons('instagram');
+    this.updateButtons('facebook');
+    this.updateButtons('twitter');
+    this.updateButtons('email');
 
     //initialize Facebook SDK
     Facebook.browserInit(this.FB_APP_ID, 'v2.8');
@@ -104,31 +129,30 @@ export class SettingsPage {
 
   
   // toggles daily push notifications
-  togglePush(bool: boolean) {
+  togglePush() {
 
-    let myBool = bool;
-    let vMessage: string = !myBool ? 'Don\'t forget to take a daily selfie for best results' : 'You will now receive a daily push to take a selfie';
+    this.dailyPush = !this.dailyPush;
+    this.autoGenDisabled = this.dailyPush ? false : true;
+
+    if (this.dailyPush === false) {
+
+      this.autoGenChecked = false;
+      this.autoGenDisabled = true;
+      this.toggleOpen = false;
+      this.updateToggleIcon(); 
+    }
+
+    //declare 2 alternate toast strings
+    let toastText: string = !this.dailyPush ? 'Don\'t forget to take a daily selfie for best results' : 'You will now receive a daily push to take a selfie';
     
     //create toast notification for toggling a push notification
-    let toast = this.toastCtrl.create({
-      message: vMessage,
+    this.toastCtrl.create({
+      message: toastText,
       duration: 3000,
       position: 'bottom',
       showCloseButton: true,
       closeButtonText: 'close'
-    });
-
-    toast.present();
-
-
-    //toggle off autogenerate if daily push is off
-    if (!myBool) {
-      this.autoGenChecked = false;
-      this.toggleOpen = false;
-      this.toggleIcon = 'arrow-dropright';
-    }
-    this.autoGenDisabled = !myBool;
-    
+    }).present();   
   }
 
 
@@ -142,22 +166,22 @@ export class SettingsPage {
 
 
   //access autogenerate features
-  toggleAutoGen(myBool: boolean) {
+  toggleAutoGen() {
 
-    if (myBool === false) {
+    if (this.dailyPush === false) {                 //disable autoGen and close toggleOpen
       this.autoGenChecked = false;
+      this.autoGenDisabled = true;
       this.toggleOpen = false;
+      this.updateToggleIcon();
     }
-    else {
-      this.autoGenChecked = !this.autoGenChecked;
-    }
+    else {   //if dailyPush is on
+      this.autoGenChecked = !this.autoGenChecked;   //toggle autoGen
 
-    if(this.autoGenChecked === false) {
-      this.toggleOpen = false;
-      this.toggleIcon = 'arrow-dropright';
+      if(this.autoGenChecked === false) {           //toggle toggleOpen, update toggleIcon
+        this.toggleOpen = false;
+        this.updateToggleIcon();
+      }
     }
-
-    console.log('autogenchecked: ' + this.autoGenChecked);
   }
 
 
@@ -166,35 +190,98 @@ export class SettingsPage {
   toggleVisible() {
 
     if (this.autoGenChecked) {
-
       this.toggleOpen = !this.toggleOpen;
-
-      this.toggleIcon = this.toggleOpen ? 'arrow-dropdown' : 'arrow-dropright';
-
+      this.updateToggleIcon();
     }
   }
 
 
-  updateButtons() {
-    this.igAuthIcon = this.igLink ? 'checkbox' : 'alert';
-    this.fbAuthIcon = this.fbLink ? 'checkbox' : 'alert';
-    this.twAuthIcon = this.twLink ? 'checkbox' : 'alert';
-    this.emailAuthIcon = this.emailLink ? 'checkbox' : 'alert';
-    
-    this.igAuthText = this.igLink ? 'Logout' : 'Login';
-    this.fbAuthText = this.fbLink ? 'Logout' : 'Login';
-    this.twAuthText = this.twLink ? 'Logout' : 'Login';
-    this.emailAuthText = this.emailLink ? 'Logout' : 'Login';
+  //toggles dropdown arrow
+  updateToggleIcon() {
+    this.toggleIcon = this.toggleOpen ? 'arrow-dropdown-circle' : 'arrow-dropright-circle';
+  }
 
-    this.igLoginColor= this.igLink ? 'secondary' : 'danger';
-    this.fbLoginColor= this.fbLink ? 'secondary' : 'danger';
-    this.twLoginColor= this.twLink ? 'secondary' : 'danger';
-    this.emailLoginColor= this.emailLink ? 'secondary' : 'danger';
+  toggle(months: number) {   //stores AutoGen boolean checkbox values 
 
-    this.iOutline = this.igLink ? false : true;
-    this.fOutline = this.fbLink ? false : true;
-    this.tOutline = this.twLink ? false : true;
-    this.eOutline = this.emailLink ? false : true;
+    switch(months) {
+      case 2: {
+        this.twoMonth = !this.twoMonth;
+        break;
+      }
+      case 3: {
+        this.threeMonth = !this.threeMonth;
+        break;
+      }
+      case 4: {
+        this.fourMonth = !this.fourMonth;
+        break;
+      }
+      case 6: {
+        this.sixMonth = !this.sixMonth;
+        break;
+      }
+      case 7: {
+        this.oneWeek = !this.oneWeek;
+        break;
+      }
+      case 14: {
+        this.twoWeek = !this.twoWeek;
+        break;
+      }
+      case 21: {
+        this.threeWeek = !this.threeWeek;
+        break;
+      }
+      case 28: {
+        this.fourWeek = !this.fourWeek;
+        break;
+      }
+      default: {
+        console.log('nothing happened');
+        break;
+      }
+    }
+  }
+
+
+
+
+  updateButtons(social: string) {
+
+    switch(social) {
+      case 'instagram': {
+        this.igAuthIcon = this.igLink ? 'checkmark-circle' : 'alert';
+        this.igAuthText = this.igLink ? 'logged in' : 'not logged in';
+        this.igLoginColor= this.igLink ? 'dark' : 'light';
+        this.iOutline = false; //this.igLink ? false : true;
+        break;
+      } 
+      case 'facebook': {
+        this.fbAuthIcon = this.fbLink ? 'checkmark-circle' : 'alert';
+        this.fbAuthText = this.fbLink ? 'logged in' : 'not logged in';
+        this.fbLoginColor= this.fbLink ? 'dark' : 'light';
+        this.fOutline = false; // this.fbLink ? false : true;
+        break;
+      } 
+      case 'twitter': {
+        this.twAuthIcon = this.twLink ? 'checkmark-circle' : 'alert';
+        this.twAuthText = this.twLink ? 'logged in' : 'not logged in';
+        this.twLoginColor= this.twLink ? 'dark' : 'light';
+        this.tOutline = false; // this.twLink ? false : true;
+        break;
+      } 
+      case 'email': {
+        this.emailAuthIcon = this.emailLink ? 'checkmark-circle' : 'alert';
+        this.emailAuthText = this.emailLink ? 'logged in' : 'not logged in';
+        this.emailLoginColor= this.emailLink ? 'dark' : 'light';
+        this.eOutline = false; // this.emailLink ? false : true;
+        break;
+      }
+      default: {
+        console.log('nothing happened');
+        break;
+      }
+    }
   }
 
 
@@ -221,7 +308,7 @@ export class SettingsPage {
         //alert(JSON.stringify(response));
 
         this.igLink = !this.igLink;
-        this.updateButtons();
+        this.updateButtons('instagram');
       });
     } else { //if user is logged in
 
@@ -242,7 +329,7 @@ export class SettingsPage {
             handler: () => {
               this.auth.logout();
               this.igLink = !this.igLink;
-              this.updateButtons();
+              this.updateButtons('instagram');
     
               let igToast = this.toastCtrl.create({
                 message: 'Lapse is no longer linked to your Instagram account',
@@ -275,7 +362,7 @@ export class SettingsPage {
         } else { //login success
 
           this.igLink = !this.igLink; 
-          this.updateButtons();
+          this.updateButtons('instagram');
    
           let igToast = this.toastCtrl.create({
             message: 'Lapse is now linked to your Instagram account',
@@ -308,7 +395,7 @@ export class SettingsPage {
             handler: () => {
 
               this.igLink = !this.igLink;
-              this.updateButtons();
+              this.updateButtons('instagram');
               let igToast = this.toastCtrl.create({
                 message: 'Lapse is no longer linked to your Instagram account',
                 duration: 3000,
@@ -349,7 +436,7 @@ export class SettingsPage {
       this.auth.login('facebook').then((response) => {
 
         this.fbLink = !this.fbLink;
-        this.updateButtons();
+        this.updateButtons('facebook');
         let fbToast = this.toastCtrl.create({
           message: 'Lapse is now linked to your Facebook account',
           duration: 3000,
@@ -378,7 +465,7 @@ export class SettingsPage {
             handler: () => {
               this.auth.logout();
               this.fbLink = !this.fbLink;
-              this.updateButtons();
+              this.updateButtons('facebook');
               let fbToast = this.toastCtrl.create({
                 message: 'Lapse is no longer linked to your Facebook account',
                 duration: 3000,
@@ -408,7 +495,7 @@ export class SettingsPage {
       Facebook.login(['email']).then((response) => {
         if(response.authResponse) {
           this.fbLink = !this.fbLink;
-          this.updateButtons();
+          this.updateButtons('facebook');
           let fbToast = this.toastCtrl.create({
             message: 'Lapse is now linked to your Facebook account',
             duration: 3000,
@@ -445,7 +532,7 @@ export class SettingsPage {
             handler: () => {
               Facebook.logout().then((response) => {
                 this.fbLink = !this.fbLink;
-                this.updateButtons();
+                this.updateButtons('facebook');
                 let fbToast = this.toastCtrl.create({
                   message: 'Lapse is no longer linked to your Facebook account',
                   duration: 3000,
@@ -484,7 +571,7 @@ export class SettingsPage {
         } else {
 
           this.fbLink = !this.fbLink;
-          this.updateButtons();
+          this.updateButtons('facebook');
           let fbToast = this.toastCtrl.create({
             message: 'Lapse is now linked to your Facebook account',
             duration: 3000,
@@ -516,7 +603,7 @@ export class SettingsPage {
             text: 'Log out',
             handler: () => {
               this.fbLink = !this.fbLink;
-              this.updateButtons();
+              this.updateButtons('facebook');
               let fbToast = this.toastCtrl.create({
                 message: 'Lapse is no longer linked to your Facebook account',
                 duration: 3000,
@@ -562,7 +649,7 @@ export class SettingsPage {
         twToast.present();
 
         this.twLink = !this.twLink;
-        this.updateButtons();
+        this.updateButtons('twitter');
 
       });
 
@@ -585,7 +672,7 @@ export class SettingsPage {
             handler: () => {
               this.auth.logout();
               this.twLink = !this.twLink;
-              this.updateButtons();
+              this.updateButtons('twitter');
               let twToast = this.toastCtrl.create({
                 message: 'Lapse is no longer linked to your Twitter account',
                 duration: 3000,
@@ -614,7 +701,7 @@ export class SettingsPage {
       TwitterConnect.login().then((response) => {
         if (response.token) {
           this.twLink = !this.twLink;
-          this.updateButtons();
+          this.updateButtons('twitter');
           let twToast = this.toastCtrl.create({
             message: 'Lapse is now linked to your Twitter account',
             duration: 3000,
@@ -650,7 +737,7 @@ export class SettingsPage {
             handler: () => {
               TwitterConnect.logout().then((response) => {
                 this.twLink = !this.twLink;
-                this.updateButtons();
+                this.updateButtons('twitter');
                 let twToast = this.toastCtrl.create({
                   message: 'Lapse is no longer linked to your Twitter account',
                   duration: 3000,
@@ -691,7 +778,7 @@ export class SettingsPage {
         } else {
 
           this.twLink = !this.twLink;
-          this.updateButtons();
+          this.updateButtons('twitter');
           let twToast = this.toastCtrl.create({
             message: 'Lapse is now linked to your Twitter account',
             duration: 3000,
@@ -723,7 +810,7 @@ export class SettingsPage {
             text: 'Log out',
             handler: () => {
               this.twLink = !this.twLink;
-              this.updateButtons();
+              this.updateButtons('email');
 
               let twToast = this.toastCtrl.create({
                 message: 'Lapse is no longer linked to your Twitter account',
@@ -767,7 +854,7 @@ export class SettingsPage {
         } else {
 
           this.emailLink = !this.emailLink;
-          this.updateButtons();
+          this.updateButtons('email');
           let emailToast = this.toastCtrl.create({
             message: 'Lapse is now linked to your email account',
             duration: 3000,
@@ -799,7 +886,7 @@ export class SettingsPage {
             text: 'Log out',
             handler: () => {
               this.emailLink = !this.emailLink;
-              this.updateButtons();
+              this.updateButtons('email');
 
               let emailToast = this.toastCtrl.create({
                 message: 'Lapse is no longer linked to your email account',

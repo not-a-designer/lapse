@@ -1,8 +1,5 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons left>
-    	<button ion-button icon-only start (click)="dismiss()"><ion-icon name="arrow-back"></ion-icon></button>
-    </ion-buttons>
     <ion-title text-center>About</ion-title>
    </ion-toolbar>
 </ion-header>
@@ -10,29 +7,34 @@
 <ion-content padding>
 
   <ion-item no-lines padding>
-      <ion-label text-center>Follow us on social media</ion-label>
-    </ion-item>
+    <ion-label text-center>Follow us on social media</ion-label>
+  </ion-item>
 
-    <ion-item no-lines no-padding (click)="goInstagram()">
-      <ion-label item-right text-center><ion-icon item-left name="logo-instagram" class="instagram larger"></ion-icon> @Lapse</ion-label>
-    </ion-item>
-
-    
-    <ion-item no-lines no-padding (click)="goFacebook()">
-      <ion-label item-right text-center><ion-icon padding item-left color="blue" name="logo-facebook" class="facebook larger"></ion-icon> /Lapse</ion-label>
-    </ion-item>
+  <ion-item no-lines no-padding (click)="goInstagram()">
+    <ion-label item-right text-center><ion-icon item-left name="logo-instagram" class="instagram larger"></ion-icon> @Lapse</ion-label>
+  </ion-item>
 
     
-    <ion-item no-lines no-padding text-center (click)="goTwitter()">
-       
-      <ion-label padding><ion-icon name="logo-twitter" class="twitter larger"></ion-icon> @Lapse</ion-label>
-    </ion-item>
-  <ion-footer text-center no-padding padding-top>
-    Lapse is a daily transformation gif generator
+  <ion-item no-lines no-padding (click)="goFacebook()">
+    <ion-label item-right text-center><ion-icon padding item-left color="blue" name="logo-facebook" class="facebook larger"></ion-icon> /Lapse</ion-label>
+  </ion-item>
 
-    <p>&copy;2016</p>
-  </ion-footer>
+    
+  <ion-item no-lines no-padding text-center (click)="goTwitter()">
+    <ion-label padding><ion-icon name="logo-twitter" class="twitter larger"></ion-icon> @Lapse</ion-label>
+  </ion-item>
+
+  <ion-fab bottom center round padding-bottom>
+    <button ion-fab large color="light" (click)="dismiss()"><ion-icon name="arrow-down"></ion-icon></button>
+  </ion-fab>
 </ion-content>
+
+<ion-footer text-center>
+  <p>Lapse is a daily transformation gif generator
+
+  <br>&copy;2016</p>
+</ion-footer>
+
 
 <style>
   .facebook {

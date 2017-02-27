@@ -1,12 +1,43 @@
 <ion-content no-padding>
-  <img [src]="cameraData" *ngIf="pictureTaken">
-  <ion-fab bottom center round *ngIf="!pictureTaken">
-    <button ion-fab (click)="takePicture()"><ion-icon name="camera"></ion-icon></button>
+
+  <img id="camera" *ngIf="pictureTaken">
+
+
+  <!-- VISIBLE WHEN PREVIEW RUNNING -->
+
+  <!-- SWITCHCAMERA BUTTON -->
+  <ion-fab bottom left round padding *ngIf="!pictureTaken">
+    <button ion-fab color="light" (click)="switchCamera()"><ion-icon [name]="switchIcon"></ion-icon></button>
   </ion-fab>
-  <ion-fab bottom left round *ngIf="pictureTaken">
+  
+  <!-- CAMERA FUNCTION BUTTON -->
+  <ion-fab bottom center round padding-bottom *ngIf="!pictureTaken">
+    <button ion-fab color="dark" (click)="takePicture()"><ion-icon name="camera"></ion-icon></button>
+  </ion-fab>
+
+  <!-- SHOW GALLERY BUTTON -->
+  <ion-fab bottom right round padding *ngIf="!pictureTaken">
+    <button ion-fab color="light" (click)="showPictures()"><ion-icon name="photos"></ion-icon></button>
+  </ion-fab>
+
+
+  <!-- VISIBLE WHEN PICTURE TAKEN -->
+
+  <!-- SAVE PICTURE BUTTON -->
+  <ion-fab bottom center round padding-bottom *ngIf="pictureTaken">
+    <button ion-fab color="dark" (click)="savePicture()"><ion-icon name="download"></ion-icon></button>
+  </ion-fab>
+
+  <!--  DELETE BUTTON -->
+  <ion-fab bottom right round padding *ngIf="pictureTaken">
     <button ion-fab color="danger" (click)="deletePicture()"><ion-icon name="trash"></ion-icon></button>
-  </ion-fab>
-  <ion-fab bottom right round *ngIf="pictureTaken">
-    <button ion-fab color="secondary" (click)="savePicture()"><ion-icon name="photos"></ion-icon></button>
-  </ion-fab>
+  </ion-fab>  
+
 </ion-content>
+
+<style>
+  .tp {
+    box-shadow: none;
+    background-color: transparent !important;
+  }
+</style>
