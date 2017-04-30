@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar text-center>
+    <ion-title>Save Capture</ion-title>
+    <ion-buttons right>
+      <button ion-button icon-only item-right color="dark" (click)="add()"><ion-icon name="add-circle"></ion-icon></button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content text-center>
+
+  <ion-list text-center *ngIf="!user.getProfileLength()">
+
+    <!-- EMPTY LIST -->
+    <ion-item text-right padding no-lines>
+      No lapses started
+    </ion-item>
+    <!-- END EMPTY LIST -->
+  </ion-list>
+
+  <ion-list *ngIf="user.getProfileLength()">
+    <!-- FOR-LOOP -->
+    <ion-item-sliding *ngFor="let profile of user.profiles; let i = index">
+      <ion-item icon-left [ngClass]="{ 'active' : i === selectedIndex, '' : i !== selectedIndex }" (click)="select(i)">
+        <ion-icon item-left *ngIf="i === selectedIndex" [color]="i === selectedIndex ? 'light' : 'dark'" name="checkmark"></ion-icon>
+        <h2 [color]="i === selectedIndex ? 'light' : 'dark'">{{ user.getProfileTitle(i) }}</h2>
+        <p>{{ user.getDateCreated(i) }}</p>
+      </ion-item>
+
+      <ion-item-options side="right" (ionSwipe)="remove(i)">
+        <button ion-button icon-only expandable color="danger" (click)="remove(i)"><ion-icon name="close"></ion-icon></button>
+      </ion-item-options>
+    </ion-item-sliding>
+    <!-- END FOR-LOOP -->
+
+  </ion-list>
+
+  <!-- SAVE TO PROFILE -->
+  <ion-item no-lines>
+    <button item-center ion-button large color="dark" [disabled]="selectedIndex === null ? true : false" (click)="savePicture()">Save</button>
+  </ion-item>
+  <!-- END SAVE TO PROFILE -->
+
+  <!-- BACK BUTTON -->
+  <ion-fab bottom center round padding-bottom>
+    <button ion-fab large color="light" (click)="dismiss()"><ion-icon name="arrow-down"></ion-icon></button>
+  </ion-fab>
+  <!-- END BACK BUTTON -->
+
+</ion-content>

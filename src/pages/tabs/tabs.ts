@@ -11,6 +11,7 @@ import { SettingsPage } from '../settings/settings';
 export class TabsPage {
   // this tells the tabs component which Pages
   // should be each tab's root Page
+
   tab1Root: any = EditPage;
   tab2Root: any = CameraPage;
   tab3Root: any = SettingsPage;

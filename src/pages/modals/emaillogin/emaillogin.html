@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar text-center>
+    <ion-title>Log In via Email</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment [(ngModel)]="status" color="dark">
+      <ion-segment-button value="login" (ionChange)="toggleLogin()">Login</ion-segment-button>
+      <ion-segment-button value="register" (ionChange)="toggleLogin()">Register</ion-segment-button>
+    </ion-segment>
+  
+  <div  [ngSwitch]="status">
+
+    <ion-list *ngSwitchCase="'login'">
+      <ion-item>
+        <ion-label floating>Email address</ion-label>
+        <ion-input type="text" [(ngModel)]="email" [ngModelOptions]="{standalone: true}"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'register'">
+      <ion-item>
+        <ion-label floating>Email address</ion-label>
+        <ion-input type="text" [(ngModel)]="email" [ngModelOptions]="{standalone: true}"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Confirm Password</ion-label>
+        <ion-input type="password" [(ngModel)]="confirm" [ngModelOptions]="{standalone: true}"></ion-input>
+      </ion-item>
+    </ion-list>
+  </div>
+  <ion-item text-center no-lines>
+    <button ion-button color="dark" large (click)="tryLogin()">{{ status === 'login' ? 'Login' : 'Register' }}</button>
+  </ion-item>
+  
+  <ion-fab bottom center round padding-bottom>
+    <button ion-fab large color="light" (click)="dismiss()"><ion-icon name="arrow-down"></ion-icon></button>
+  </ion-fab>
+</ion-content>
+
+<style>
+  .facebook {
+    color: blue;
+  }
+
+  .twitter {
+    color: cyan;
+  }
+
+  .instagram {
+    color: navy;
+  }
+  .larger {
+    font-size:28px;
+  }
+  
+</style>

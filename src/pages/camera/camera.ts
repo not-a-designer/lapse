@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController, ModalController } from 'ionic-angular';
 
+//plugins
 import { Diagnostic, CameraPreview, CameraPreviewRect } from 'ionic-native';
+
+//custom modal
+import { SaveCapturePage } from '../modals/save/savecapture';
 
 @Component({
   selector: 'page-camera',
@@ -9,18 +13,20 @@ import { Diagnostic, CameraPreview, CameraPreviewRect } from 'ionic-native';
 })
 
 
-
 export class CameraPage {
 
-  public pictureTaken: boolean;           //global var for preview image and camera buttons
-  public previewRect: CameraPreviewRect;  //global var for poisition and dimensions of CameraPreview
-  public frontFacing: boolean;          //global var for camera direction toggle
-  public switchIcon: string;              //global var for toggle button
+  public pictureTaken: boolean;           //preview image and camera buttons
+  public previewRect: CameraPreviewRect;  //poisition and dimensions of CameraPreview
+  public frontFacing: boolean;            //camera direction toggle
+  public optionsOpen: boolean;            //global var for options toggle
+  public opacity: number;                 //overlay opacity value
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public alertCtrl: AlertController,
-              public toastCtrl: ToastController) {
+              public toastCtrl: ToastController,
+              public modalCtrl: ModalController
+  ) {
 
     this.previewRect = {         //set preview dimensions to the device inner dimensions
       x: 0,
@@ -32,30 +38,31 @@ export class CameraPage {
     this.checkPermissions();
 
     this.pictureTaken = false;    //default state for template images and buttons
-
+    this.optionsOpen = false;     //default state for options 
+    this.opacity = 0;             //initial overlay opacity
   }
-  /***END CONSTRUCTOR****/
+  /*** END CONSTRUCTOR ***/
 
 
-  /**
-   * * * checkPermissions() * * *
-   ***/
+  /**********/
   checkPermissions() {
-    Diagnostic.isCameraAuthorized().then((authorized) => {          //if user already has camera permissions
-      if(authorized) {
+    Diagnostic.isCameraAuthorized().then((authorized) => {     //plugin runs permissions query returning a promise     
 
-        this.startPreview();  //start camerapreview
+      if(authorized) {       //if user already has camera permissions
 
-      } else {  //if user does not have camera permissions
-        Diagnostic.requestCameraAuthorization().then((status) => {
+        this.startCamera();  //start camerapreview
+
+      } else {               //if user does not have camera permissions
+
+        Diagnostic.requestCameraAuthorization().then((status) => {  //plugin requests camera permissions, returning a promise
 
           if (status == Diagnostic.permissionStatus.GRANTED) {      //if user selects to authorize
 
-            this.startPreview();
+            this.startCamera();                                     //start camerapreview
 
-          } else {      //if user denied authorization
+          } else {                                                  //if user denied authorization
 
-            this.toastCtrl.create({
+            this.toastCtrl.create({                                 //create and show toast, no camera access
               message: 'Cannot access camera',
               position: 'bottom',
               duration: 3000
@@ -70,71 +77,83 @@ export class CameraPage {
 
 
 
-  /******************START CAMERAPREVIEW FUNCTIONS*******************/
 
 
-  /***
-   * * * startPreview()* * *
-   ***/
-  startPreview() {
+  /*********/
+  toggleOptions() {
+    this.optionsOpen = !this.optionsOpen;
+  }
+  /*** END TOGGLEOPTIONS() ***/
+
+
+
+
+
+  /****************** START CAMERAPREVIEW PLUGIN *******************/
+
+
+  /********/
+  startCamera() {
 
     CameraPreview.startCamera(         //start CameraPreview
 
       this.previewRect,  //dimensions
-      'front',           //camera direction
+      'back',           //camera direction
       false,             //dragEnabled
       false,             //tapEnabled
       true,              //toBack
       1                  //alpha
     );
-    this.frontFacing = true;
-    this.switchIcon = 'happy';
+
+    this.frontFacing = false;      //syncs button toggle and camera direction
+    CameraPreview.switchCamera();  //switch camera direction
     CameraPreview.setOnPictureTakenHandler().subscribe((result) => {            //returns an observable that is a string array with 2 items
 
-      CameraPreview.hide();  //hides camera preview
+      CameraPreview.hide();  //stops camera preview
+
       (<HTMLImageElement>document.getElementById('camera')).src = result[1];    //sets source url to preview image
    
-      
-      
-
     });
   }
-  /***             END INITIALIZEPREVIEW()         ***/
+  /*** END INITIALIZEPREVIEW() ***/
 
  
   
 
 
-  /***
-   * * * takePicture() * * *
-   ***/  
+  /********/  
   takePicture(){
 
-    let size = {       //declare capture dimesions
+    let size = {                       //declare capture dimensions
 
       maxWidth: window.innerWidth, 
       maxHeight: window.innerHeight
 
     };
 
-    CameraPreview.takePicture(size);     //executes native image capture and triggers onPictureTakenHandler()
-    this.pictureTaken = true;            //toggles camera buttons
+    if (this.optionsOpen) {            //close option window before capture
+      this.toggleOptions();
+    }
+
     this.toastCtrl.create({
       message: 'Hold camera steady until an image is captured',
-      position: 'center',
+      position: 'top',
       duration: 3000
     }).present();
+
+    this.pictureTaken = true;          //toggles camera buttons
+
+    CameraPreview.takePicture(size);   //executes native image capture and triggers onPictureTakenHandler()
+    
   }
-  /***            END TAKEPICTURE()          ***/
+  /*** END TAKEPICTURE() ***/
   
 
 
 
   switchCamera(){
-    CameraPreview.switchCamera();                       //toggles front and rear camera
-    this.frontFacing = this.frontFacing ? false : true;
-
-    this.switchIcon = this.frontFacing ? 'happy' : 'people';
+    CameraPreview.switchCamera();            //toggles front and rear camera
+    this.frontFacing = !this.frontFacing;    //custom toggle for button
   }
 
   showCamera(){
@@ -148,14 +167,12 @@ export class CameraPage {
   stopCamera(){
     CameraPreview.stopCamera();      //ends CameraPreview
   }
-  /*****************END CAMERAPREVIEW FUNCTIONS**********************/
+  /***************** END CAMERAPREVIEW PLUGIN **********************/
 
 
 
 
-  /***
-   * * * deletePicture() * * *
-   ***/
+  /*******/
   deletePicture() {
 
     this.alertCtrl.create({          //alert box with cancel and delete options
@@ -179,47 +196,26 @@ export class CameraPage {
       }]
 
     }).present();
-    
+   
     
   }
-  /***    END DELETEPICTURE()      ***/
+  /*** END DELETEPICTURE() ***/
 
 
-
-
-  /***
-   * * * savePicture() * * *
-   ***/
-  savePicture() {
-
-    this.alertCtrl.create({       //alert box with cancel and save options
-
-      title: 'Save Picture',
-      message: 'Are you sure you want to save this picture?',
-
-      buttons: [{
-        text: 'Cancel',
-        role: 'cancel',
-        handler: () => {
-          console.log('cancel clicked');
-        }
-      }, {
-        text: 'Save',
-        handler: () => {
-          this.pictureTaken = false;
-          this.toastCtrl.create({
-
-            message: 'image saved',
-            position: 'bottom',
-            duration: 3000
-
-          }).present();
-        }
-      }]  //end buttons array
-
-    }).present();
+/*******/
+  showSaveModal() {
+    
+    let saveModal = this.modalCtrl.create(SaveCapturePage);
+    saveModal.onDidDismiss((data) => {
+      if(data === false) {              //if the save is a success, restart the camerapreview
+        this.pictureTaken = data;
+        this.showCamera();
+      }
+    });
+    saveModal.present();
   }
-  /*** END SAVEPICTURE FUNCTION ***/
+/*** END SHOWSAVEMODAL() ***/
+
 
 
   ionViewDidLoad() {

@@ -19,6 +19,7 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
+    <preference name="orientation" value="portrait" />
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
@@ -36,25 +37,11 @@
     <plugin name="cordova-plugin-statusbar" spec="2.2.1" />
     <plugin name="cordova-plugin-device" spec="1.1.4" />
     <plugin name="cordova-plugin-splashscreen" spec="~4.0.1" />
-    <plugin name="cordova-plugin-camera" spec="~2.3.1" />
-    <plugin name="cordova-plugin-x-toast" spec="~2.5.2" />
-    <plugin name="cordova-instagram-plugin" spec="~0.5.4" />
-    <plugin name="cordova-plugin-nativestorage" spec="~2.2.1" />
-    <plugin name="twitter-connect-plugin" spec="~0.6.0">
-        <variable name="FABRIC_KEY" value="2ffe1bb19ee3c3395df3990a1332ffd47c1669bc" />
-    </plugin>
-    <preference name="TwitterConsumerKey" value="9t00rgZjzMtYUEgnZMUvajPBY" />
-    <preference name="TwitterConsumerSecret" value="DGLDjR51Cf8hjo7T9hXeFip71Yp6u6BO35ureiu3i3AAZH1dai" />
-    <preference name="deployment-target" value="7.0" />
-    <plugin name="cordova-plugin-inappbrowser" spec="~1.6.1" />
+    <plugin name="com.mbppower.camerapreview" spec="~0.0.8" />
+    <plugin name="de.appplant.cordova.plugin.local-notification" spec="~0.8.4" />
+    <plugin name="cordova-plugin-inappbrowser" spec="~1.7.0" />
     <plugin name="cordova-plugin-facebook4" spec="~1.7.4">
         <variable name="APP_ID" value="1355955421093900" />
         <variable name="APP_NAME" value="LapseApp" />
-    </plugin>
-    <plugin name="cordova-plugin-file" spec="~4.3.1" />
-    <plugin name="cordova.plugins.diagnostic" spec="~3.4.1" />
-    <plugin name="com.mbppower.camerapreview" spec="~0.0.8" />
-    <plugin name="phonegap-plugin-push" spec="~1.9.4">
-        <variable name="SENDER_ID" value="841749675635" />
     </plugin>
 </widget>

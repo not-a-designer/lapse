@@ -3,10 +3,10 @@ import { NavController } from 'ionic-angular';
 
 
 @Component({
-  selector: 'page-modal',
-  templateUrl: 'modal.html'
+  selector: 'page-preview',
+  templateUrl: 'preview.html'
 })
-export class ModalPage {
+export class PreviewPage {
 
   constructor(public navCtrl: NavController) {}
 
@@ -16,7 +16,7 @@ export class ModalPage {
 
 
   dismiss() {
-    this.navCtrl.pop(ModalPage);
+    this.navCtrl.pop(PreviewPage);
   }
 
 }

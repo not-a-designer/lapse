@@ -1,13 +1,25 @@
+<ion-header *ngIf="optionsOpen">
+  <ion-toolbar transparent>
+    <ion-title>
+      <ion-range [(ngModel)]="opacity" color="light" min="0" max="100" step="1" snaps="1" value="0">
+        <ion-label color="light" range-left>{{ opacity || 0}}</ion-label>
+        <ion-label color="light" range-right>100</ion-label>
+      </ion-range>
+    </ion-title>
+    <ion-buttons right>
+      <button ion-button color="light" (click)="switchCamera()" *ngIf="!pictureTaken"><ion-icon style="font-size: 30px;" [name]="frontFacing ? 'happy' : 'people'"></ion-icon></button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content no-padding>
 
-  <img id="camera" *ngIf="pictureTaken">
+  
+  <!-- VISIBLE WHEN PREVIEW RUNNING '!pictureTaken' -->
 
-
-  <!-- VISIBLE WHEN PREVIEW RUNNING -->
-
-  <!-- SWITCHCAMERA BUTTON -->
-  <ion-fab bottom left round padding *ngIf="!pictureTaken">
-    <button ion-fab color="light" (click)="switchCamera()"><ion-icon [name]="switchIcon"></ion-icon></button>
+  <!-- OPTIONS TOGGLE -->
+  <ion-fab bottom right round padding *ngIf="!pictureTaken">
+    <button ion-fab [color]="optionsOpen ? 'clear' : 'light'" (click)="toggleOptions()"><ion-icon name="options"></ion-icon></button>
   </ion-fab>
   
   <!-- CAMERA FUNCTION BUTTON -->
@@ -15,29 +27,21 @@
     <button ion-fab color="dark" (click)="takePicture()"><ion-icon name="camera"></ion-icon></button>
   </ion-fab>
 
-  <!-- SHOW GALLERY BUTTON -->
-  <ion-fab bottom right round padding *ngIf="!pictureTaken">
-    <button ion-fab color="light" (click)="showPictures()"><ion-icon name="photos"></ion-icon></button>
+
+
+  <!-- VISIBLE WHEN IMAGE PREVIEW 'PictureTaken' -->
+
+  <!-- DELETE BUTTON -->
+  <ion-fab top left round no-padding *ngIf="pictureTaken">
+    <button ion-fab color="clear" style="box-shadow: none;" (click)="deletePicture()"><ion-icon name="close"></ion-icon></button>
   </ion-fab>
-
-
-  <!-- VISIBLE WHEN PICTURE TAKEN -->
+  
+  <!-- IMAGE PREVIEW -->
+  <img id="camera" *ngIf="pictureTaken">
 
   <!-- SAVE PICTURE BUTTON -->
   <ion-fab bottom center round padding-bottom *ngIf="pictureTaken">
-    <button ion-fab color="dark" (click)="savePicture()"><ion-icon name="download"></ion-icon></button>
+    <button ion-fab color="dark" (click)="showSaveModal()"><ion-icon name="download"></ion-icon></button>
   </ion-fab>
 
-  <!--  DELETE BUTTON -->
-  <ion-fab bottom right round padding *ngIf="pictureTaken">
-    <button ion-fab color="danger" (click)="deletePicture()"><ion-icon name="trash"></ion-icon></button>
-  </ion-fab>  
-
 </ion-content>
-
-<style>
-  .tp {
-    box-shadow: none;
-    background-color: transparent !important;
-  }
-</style>

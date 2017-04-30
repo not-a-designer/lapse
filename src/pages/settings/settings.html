@@ -9,104 +9,91 @@
 
 <ion-content padding>
 
-  <ion-list no-padding>  
+  <ion-list no-padding text-center>  
 
-    <ion-item no-lines no-padding>
-      <ion-label><ion-icon padding name="calendar"></ion-icon>Push notifications</ion-label>
-      <ion-toggle #push color="dark" [checked]="dailyPush" (ionChange)="togglePush()"></ion-toggle>
+    <ion-item no-lines>
+      <button ion-button item-left icon-only clear color="dark" (click)="showScheduleModal()"><ion-icon [name]="user.getAlertStatus() ? 'add-circle' : 'alarm'"></ion-icon></button>
+      <ion-label>{{ user.getAlertStatus() ? 'Add new alert' : 'Enable push alerts' }}</ion-label>
+      <ion-toggle item-right color="dark" [(ngModel)]="user.pushOn" (ionChange)="togglePush()"></ion-toggle>
+      <!--<button ion-button icon-left item-left clear color="dark" (click)="showScheduleModal()">
+        <ion-icon padding-left button-left class="larger" color="dark" [name]="dailyPush ? 'add-circle' : 'alarm'"></ion-icon>
+        {{ dailyPush ? 'Add new alert' : 'Enable push alerts' }}
+      </button>
+      <ion-toggle item-right color="dark" [(ngModel)]="dailyPush" (ionChange)="togglePush()"></ion-toggle>-->
     </ion-item>
 
-    <ion-item no-padding>
-      
-      <ion-label><ion-icon padding [name]="toggleIcon" (click)="toggleVisible()"></ion-icon>&nbsp;Auto-generate gifs</ion-label>
-      <ion-toggle #autoGen color="dark" [disabled]="autoGenDisabled" [checked]="autoGenChecked" (ionChange)="toggleAutoGen()"></ion-toggle>
-    </ion-item>
+    <ion-item-group horizontal-padding text-center>
 
-    <ion-item-group *ngIf="toggleOpen">
-      <ion-row no-padding>
-        <ion-col width-50 no-padding>
-          <ion-label no-padding text-center>Weeks</ion-label>
-        </ion-col>
-        <ion-col width-50 no-padding>
-          <ion-label no-padding text-center>Months</ion-label>
-        </ion-col>
-      </ion-row>
-      <ion-row no-padding>
-        <ion-col width-25 no-padding>
-          
-          <ion-item padding-left no-lines>
-            <ion-label no-padding>&nbsp;1</ion-label>
-            <ion-checkbox no-padding color="dark" [disabled]="!autoGenChecked" [checked]="oneWeek" (ionChange)="toggle(7)"></ion-checkbox> 
-          </ion-item>
-        
-          <ion-item padding-left no-lines>
-            <ion-label no-padding>&nbsp;3</ion-label>
-            <ion-checkbox no-padding color="dark" [disabled]="!autoGenChecked" [checked]="threeweek" (ionChange)="toggle(21)"></ion-checkbox>
-          </ion-item>
-        </ion-col>
+      <ion-item no-lines text-center>
+        <button padding icon-left icon-right ion-button block text-center [color]="igLink ? 'ig' : 'light'" (click)="checkLoginIg()">
+          <ion-row center>
+            <ion-col width-20>
+              <ion-icon padding [color]="igLink ? 'light' : 'ig'" class="larger" name="logo-instagram"></ion-icon>
+            </ion-col>
 
-        <ion-col width-25 no-padding>
-          <ion-item padding-left no-lines>
-            <ion-label no-padding>&nbsp;2</ion-label>
-            <ion-checkbox no-padding color="dark" [disabled]="!autoGenChecked" [checked]="twoWeek" (ionChange)="toggle(14)"></ion-checkbox> 
-          </ion-item>
-        
-          <ion-item padding-left no-lines>
-            <ion-label no-padding>&nbsp;4</ion-label>
-            <ion-checkbox no-padding color="dark" [disabled]="!autoGenChecked" [checked]="fourWeek" (ionChange)="toggle(28)"></ion-checkbox>
-          </ion-item>
-        </ion-col>
+            <ion-col width-60>
+              {{ igLink ? 'Connected' : 'Connect to Instagram' }}
+            </ion-col>
 
-        <ion-col width-25 no-padding>
-          <ion-item padding-left no-lines>
-            <ion-label no-padding>&nbsp;2</ion-label>
-            <ion-checkbox no-padding color="dark" [disabled]="!autoGenChecked" [checked]="twoMonth" (ionChange)="toggle(2)"></ion-checkbox>
-          </ion-item>
-
-          <ion-item padding-left no-lines>
-            <ion-label no-padding>&nbsp;4</ion-label>
-            <ion-checkbox no-padding color="dark" [disabled]="!autoGenChecked" [checked]="fourMonth" (ionChange)="toggle(4)"></ion-checkbox>
-          </ion-item>
-        </ion-col>
-
-        <ion-col width-25 no-padding>
-          <ion-item padding-left no-lines>
-            <ion-label no-padding>&nbsp;3</ion-label>
-            <ion-checkbox no-padding color="dark" [disabled]="!autoGenChecked" [checked]="threeMonth" (ionChange)="toggle(3)"></ion-checkbox>
-          </ion-item>
-
-          <ion-item padding-left no-lines>
-            <ion-label no-padding>&nbsp;6</ion-label>
-            <ion-checkbox no-padding color="dark" [disabled]="!autoGenChecked" [checked]="sixMonth" (ionChange)="toggle(6)"></ion-checkbox>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-item-group>
-
-    <ion-item-group>
-
-      <ion-item no-lines no-padding>
-        <ion-icon padding-left item-left class="larger instagram" name="logo-instagram"></ion-icon>
-        <button ion-button block text-center [outline]="iOutline" [color]="igLoginColor" (click)="checkLoginIg()">{{ igAuthText }}</button>
-        <ion-icon padding-left item-right [color]="igLoginColor" [name]="igAuthIcon"></ion-icon>
+            <ion-col width-20>
+              <ion-icon padding [color]="igLink ? 'light' : 'danger'" [name]="igLink ? 'checkmark-circle' : 'alert'"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </button>
       </ion-item>
  
-      <ion-item no-lines no-padding>
-        <ion-icon padding-left item-left class="larger facebook" name="logo-facebook"></ion-icon>
-        <button ion-button block text-center [outline]="fOutline" [color]="fbLoginColor" (click)="checkLoginFb()">{{ fbAuthText }}</button>
-        <ion-icon padding-left item-right [color]="fbLoginColor" [name]="fbAuthIcon"></ion-icon>
+      <ion-item no-lines text-center>
+        <button padding icon-left icon-right ion-button block text-center [color]="fbLink ? 'fb' : 'light'" (click)="checkLoginFb()">
+          <ion-row center>
+            <ion-col width-20>
+              <ion-icon padding class="larger" [color]="fbLink ? 'light' : 'fb'" name="logo-facebook"></ion-icon>
+            </ion-col>
+
+            <ion-col width-60>
+              {{ fbLink ? 'Connected' : 'Connect to Facebook' }}
+            </ion-col>
+
+            <ion-col width-20>
+              <ion-icon padding [color]="fbLink ? 'light' : 'danger'" [name]="fbLink ? 'checkmark-circle' : 'alert'"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </button>
       </ion-item>
 
-      <ion-item no-lines no-padding>
-        <ion-icon padding-left item-left class="larger twitter" name="logo-twitter"></ion-icon>
-        <button ion-button block text-center [outline]="tOutline" [color]="twLoginColor" (click)="checkLoginTw()">{{ twAuthText }}</button>
-        <ion-icon padding-left item-right [color]="twLoginColor"[name]="twAuthIcon"></ion-icon>
+      <ion-item no-lines text-center>
+        <button padding icon-left icon-right ion-button block text-center [color]="twLink ? 'tw' : 'light'" (click)="checkLoginTw()">
+          <ion-row center>
+            <ion-col width-20>
+              <ion-icon padding class="larger" [color]="twLink ? 'light' : 'tw'" name="logo-twitter"></ion-icon>
+            </ion-col>
+
+            <ion-col width-60>
+              {{ twLink ? 'Connected' : 'Connect to Twitter' }}
+            </ion-col>
+
+            <ion-col width-20>
+              <ion-icon padding [color]="twLink ? 'light' : 'danger'" [name]="twLink ? 'checkmark-circle' : 'alert'"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </button>
       </ion-item>
 
-      <ion-item no-lines no-padding>
-        <ion-icon padding-left item-left class="larger" name="mail"></ion-icon>
-        <button ion-button block text-center [outline]="eOutline" [color]="emailLoginColor" (click)="checkLoginEmail()">{{ emailAuthText }}</button>
-        <ion-icon padding-left item-right [color]="emailLoginColor" [name]="emailAuthIcon"></ion-icon>
+      <ion-item no-lines text-center>
+        <button padding icon-left icon-right ion-button block text-center [color]="emailLink ? 'dark' : 'light'" (click)="checkLoginEmail()">
+          <ion-row center>
+            <ion-col width-20>
+              <ion-icon padding class="larger" name="mail"></ion-icon>
+            </ion-col>
+
+            <ion-col width-60>
+              {{ emailLink ? 'Connected' : 'Connect an email' }}
+            </ion-col>
+
+            <ion-col width-20>
+              <ion-icon padding [color]="emailLink ? 'light' : 'danger'" [name]="emailLink ? 'checkmark-circle' : 'alert'"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </button>
       </ion-item>
 
     </ion-item-group>

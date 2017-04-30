@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar text-center>
+    <ion-title>Notifications</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- EMPTY PROFILE LIST -->
+  <ion-list text-center *ngIf="!user.getProfileLength()">
+    <ion-item text-center no-lines>
+      No Profiles
+    </ion-item>
+  </ion-list>
+  <!-- END EMPTY PROFILE LIST -->
+
+
+  <ion-list>
+    <!-- PROFILE FOR-LOOP -->
+    <ion-item-group *ngFor="let profile of user.profiles; let i = index" [hidden]="!user.getProfileLength()">
+
+      <ion-item-divider color="dark">{{ user.getProfileTitle(i) }}</ion-item-divider>
+
+        <ion-item>
+          <ion-datetime item-left dateFormat="HH:mm A" pickerFormat="hh mm A" doneText="Set Time" [(ngModel)]="profile.alertAt" (ionChange)="changeTime(i, $event)"></ion-datetime>
+          <ion-label>{{ profile.alertText }}</ion-label>
+          <button ion-button icon-only item-right clear (click)="editAlertText(i)"><ion-icon color="dark" name="options"></ion-icon></button>
+          <ion-toggle item-right color="dark" [(ngModel)]="profile.alertActive" (ionChange)="toggleNotification(i)"></ion-toggle>
+        </ion-item>
+
+    </ion-item-group>
+    <!-- END PROFILE FOR-LOOP -->
+  </ion-list>
+
+  <ion-fab bottom center round padding-bottom>
+    <button ion-fab large color="light" (click)="dismiss()"><ion-icon name="arrow-down"></ion-icon></button>
+  </ion-fab>
+
+</ion-content>

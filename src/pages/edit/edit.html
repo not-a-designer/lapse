@@ -9,24 +9,24 @@
 
 <ion-content>
 
-  <ion-item horizontal-padding text-center no-lines>
-    <ion-label stacked>{{ totalFrames.value || 7 }} frames</ion-label>
-    <ion-range #totalFrames color="dark" min="7" max="1825" step="7" snaps="7" value="7">
-      <ion-label range-left>7</ion-label>
-      <ion-label range-right>1825</ion-label>
+  <ion-item horizontal-padding no-lines>
+    <ion-label stacked>frames</ion-label>
+    <ion-range [(ngModel)]="totalFrames" color="dark" dualKnobs="true" min="7" max="1825" step="7" snaps="7">
+      <ion-label range-left>{{ totalFrames.upper - totalFrames.lower || MIN_FRAMES }}</ion-label>
+      <ion-label range-right>{{ MAX_FRAMES }}</ion-label>
     </ion-range>
   </ion-item>
 
-  <ion-item horizontal-padding text-center>
-    <ion-label stacked>{{ fps.value || 1 }} fps</ion-label>
-    <ion-range #fps color="dark" min="1" max="10" step="1" snaps="1" value="1">
-      <ion-label range-left>1</ion-label>
-      <ion-label range-right>10</ion-label>
+  <ion-item horizontal-padding>
+    <ion-label stacked>fps</ion-label>
+    <ion-range [(ngModel)]="fps" color="dark" min="1" max="24" step="1" snaps="1" value="1">
+      <ion-label range-left>{{ fps }}</ion-label>
+      <ion-label range-right>{{ MAX_FPS }}</ion-label>
     </ion-range>
   </ion-item>
 
   <ion-fab bottom left round padding>
-    <button ion-fab color="light" (click)="saveGif(totalFrames.value, fps.value)"><ion-icon name="download"></ion-icon></button>
+    <button ion-fab color="light" (click)="saveGif()"><ion-icon name="download"></ion-icon></button>
   </ion-fab>
 
   <ion-fab bottom center round padding-bottom>

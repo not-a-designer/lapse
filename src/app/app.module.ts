@@ -1,20 +1,32 @@
 import { NgModule, ErrorHandler } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { MyApp } from './app.component';
+import { UserService } from './user.service';
 
-import { Camera } from 'ionic-native';
-import { Facebook } from 'ionic-native';
-import { TwitterConnect } from 'ionic-native';
-import { CameraPreview } from 'ionic-native';
+//PLUGINS
+import { Camera, CameraPreview, Facebook, TwitterConnect } from 'ionic-native';
+//PLUGINS
 
+//CUSTOM PAGES
 import { CameraPage } from '../pages/camera/camera';
 import { SettingsPage } from '../pages/settings/settings';
 import { EditPage } from '../pages/edit/edit';
 import { TabsPage } from '../pages/tabs/tabs';
-import { ModalPage } from '../pages/modal/modal';
-import { AboutPage } from '../pages/about/about';
-import { EmailLoginPage } from '../pages/emaillogin/emaillogin';
+//MODALS
+import { PreviewPage } from '../pages/modals/preview/preview';
+import { SaveCapturePage } from '../pages/modals/save/savecapture';
+import { SchedulePage } from '../pages/modals/schedule/schedule';
+import { AboutPage } from '../pages/modals/about/about';
+import { EmailLoginPage } from '../pages/modals/emaillogin/emaillogin';
+
+//old test modals
+/*import { IgLoginPage } from '../pages/modals/iglogin/iglogin';
+import { FbLoginPage } from '../pages/modals/fblogin/fblogin';
+import { TwLoginPage } from '../pages/modals/twlogin/twlogin';
+*/
+//CUSTOM PAGES
 
 
 const cloudSettings: CloudSettings = {
@@ -31,12 +43,15 @@ const cloudSettings: CloudSettings = {
     SettingsPage,
     EditPage,
     TabsPage,
-    ModalPage,
+    PreviewPage,
+    SaveCapturePage,
+    SchedulePage,
     AboutPage,
     EmailLoginPage
   ],
 
   imports: [
+    BrowserModule,
     IonicModule.forRoot(MyApp),
     CloudModule.forRoot(cloudSettings)
   ],
@@ -49,7 +64,9 @@ const cloudSettings: CloudSettings = {
     SettingsPage,
     EditPage,
     TabsPage,
-    ModalPage,
+    PreviewPage,
+    SaveCapturePage,
+    SchedulePage,
     AboutPage,
     EmailLoginPage
   ],
@@ -57,7 +74,8 @@ const cloudSettings: CloudSettings = {
   providers: [Facebook, 
               TwitterConnect, 
               Camera, 
-              CameraPreview, 
+              CameraPreview,
+              UserService,
               {
                 provide: ErrorHandler, 
                 useClass: IonicErrorHandler

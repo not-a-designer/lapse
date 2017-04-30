@@ -1,108 +1,80 @@
 import { Component } from '@angular/core';  //basic angular2 modules
 import { NavController, NavParams, ModalController, ActionSheetController, AlertController } from 'ionic-angular';  //ionic modules
 
+//modal page imports
+import { PreviewPage } from '../modals/preview/preview';
 
-import { ModalPage } from '../modal/modal';  //import pages and custom components
 
-
-//metadata for EditPage
 @Component({
   selector: 'page-edit',
   templateUrl: 'edit.html'
 })
 
 
-//exported scripts for EditPage
 export class EditPage {
 
+  public totalFrames: any;           //ngModel for frames range, min and max values
+  public MIN_FRAMES: number = 7;
+  public MAX_FRAMES: number = 1825;
 
-  //starting variables for template inputs
-  public tFrames: number = 7;
-  public tFps: number = 1;
+  public fps: number;          //ngModel for fps range, min and max values
+  public MIN_FPS: number = 1;
+  public MAX_FPS: number = 24;
 
-
-  //constructor accepts 5 parameters that are imported ionic modules
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public modalCtrl: ModalController,
               public actionSheetCtrl: ActionSheetController,
               public alertCtrl: AlertController
    ) {
-    //this.tFrames = 7;
-    //this.tFps = 1;
+
+    this.totalFrames = {'lower': 7, 'upper': 1825 };   //initialize duaKnobs on frames range
+    this.fps = 1;          //initialize fps range
   }
  
 
+  /***********/
+  saveGif() {
 
+    let frames = this.totalFrames.upper - this.totalFrames.lower;   //the difference of the two knobs
 
-  //Creates alert windows before saving the gif
-  //2 parameters of frames and fps 
+    this.alertCtrl.create({                         //show alert box confirming save
 
-  saveGif(frames: number, fps: number) {
-
-    //declare local variables as the parameters
-    if(isNaN(frames)) {
-      this.tFrames = 7;
-    }else{
-      this.tFrames = frames;
-    }
-
-    if(isNaN(fps)) {
-      this.tFps = 1;
-    }else{
-      this.tFps = fps;
-    } 
-
-
-    let saveAlert = this.alertCtrl.create({
-
-      //alert title
       title: 'Confirm',
+      message: 'Do you want to save? (Frames\: ' + frames + ' fps: ' +  this.fps + ')', 
 
-      //alert message
-      message: 'Do you want to save? (Frames\: ' + this.tFrames + ' fps: ' +  this.tFps + ')', 
-
-      //array of buttons
-      buttons: [ 
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-	  }
-        },
-
-        {
-          text: 'Save',
-          handler: () => {
-            console.log('Saved Gif');
-          }
-
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+	}
+      }, {
+        text: 'Save',
+        handler: () => {
+          console.log('Saved Gif');
         }
-      ]  
-    }); 
-    //End of create function
-
-    //show alert
-    saveAlert.present();  
- }
+      }]  
+    }).present();  
+  }
+  /*** END SAVEGIF() ***/
 
 
 
-  //Creates modal window with imported component and displays it
+  /**************/
   showPreviewModal() {
-    let previewModal = this.modalCtrl.create(ModalPage);
+    let previewModal = this.modalCtrl.create(PreviewPage);
    
 
     //show Modal
     previewModal.present();
- }
+  }
+  /*** END SHOWPREVIEWMODAL() ***/
 
 
 
 
-
-  //Shows action menu
+  /************/
   presentShareActionSheet() {
 
     let actionSheet = this.actionSheetCtrl.create({
@@ -143,7 +115,7 @@ export class EditPage {
     //show actionSheet
     actionSheet.present();
   }
-
+  /*** END PRESENTSHAREACTIONSHEET() ***/
 
 
 
